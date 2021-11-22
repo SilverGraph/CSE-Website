@@ -8,6 +8,7 @@ A website for CSE freshers
 
 ``` npm start``` to start the development server
 
+
 For server:
 
 - navigate to the server folder
