@@ -15,8 +15,11 @@ export default function Card({seno , index}) {
                <p className="px-2">HOBBIES: {seno.hobbies}</p>
 
                <IconContext.Provider value={{color: 'black', size: 30}}>
+                   {/* eslint-disable-next-line */}
                    <a href="#" className="mx-2  icon"> <FaInstagram/></a>
+                   {/* eslint-disable-next-line */}
                    <a href="#" className="mx-2 icon "> <FaLinkedinIn/></a>
+                   {/* eslint-disable-next-line */}
                    <a href="#" className="mx-2 icon"> <FaGithub/></a>
                </IconContext.Provider>
                

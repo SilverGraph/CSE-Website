@@ -1,0 +1,8 @@
+html, body {
+    background: #000;
+}
+
+#container-slides {
+    background: #000;
+    scroll-behavior: smooth;
+}
