@@ -1,11 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import AOS from "aos"
+import "aos/dist/aos.css";
+import "./Home.css"
 import Slide1 from "./Slide1/Slide1"
 import Slide2 from "./Slide2/Slide2"
 import Slide3 from "./Slide3/Slide3"
 
 export default function Home() {
+    useEffect(() => {
+        AOS.init({
+            delay: 0,
+            easing: 'ease-in-out',
+            duration: 1500
+        })
+        AOS.refresh()
+    }, [])
+
     return (
-        <div>
+        <div id="container-slides">
             <Slide1 />
             <Slide2 />
             <Slide3 />
