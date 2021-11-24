@@ -1,3 +1,10 @@
 .container-slide-3 {
-    background-color: chartreuse;
+    align-items: center;
+    background-color: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    margin: 50px;
 }
