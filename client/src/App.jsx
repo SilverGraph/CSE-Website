@@ -4,6 +4,7 @@ import Footer from "./components/Footer"
 import Students from "./pages/Students/Students";
 import Login from "./pages/Auth/Login"
 import Signup from "./pages/Auth/Signup"
+import SocCard from "./pages/Resources/SocCard"
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Navbar />
       <Home />
       <Students />
+      <SocCard />
       <Login />
       <Signup />
       <Footer />
