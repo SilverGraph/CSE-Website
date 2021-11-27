@@ -9,6 +9,7 @@ import Login from './pages/Auth/Login';
 import Signup from './pages/Auth/Signup';
 // import Resources from './pages/Resources/Resources'
 import SocCard from './pages/Resources/SocCard';
+import error from './components/error';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -18,9 +19,7 @@ ReactDOM.render(
       <Route exact path="/login" component={Login} />
       <Route exact path="/signup" component={Signup} />
       <Route exact path="/resources" component={SocCard} />
-      <Route>
-        <h1>You are in a wrong page...</h1>
-      </Route>  
+      <Route path='*' component={error}/> 
     </Switch>
   </BrowserRouter>,
   document.getElementById('root')
