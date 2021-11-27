@@ -79,6 +79,7 @@ def api_login():
 @app.route('/api/logout')
 @login_required
 def logout():
+    # print(current_user.email)
     logout_user()
     return jsonify(status="Logged out successfully"), 200
 
@@ -88,7 +89,7 @@ def test():
 
 @login_manager.unauthorized_handler
 def unauth():
-    return jsonify(status="Where you goin niqqa"), 400
+    return jsonify(status="Where you goin"), 400
 
 @login_manager.user_loader
 def load_user(user_id):
