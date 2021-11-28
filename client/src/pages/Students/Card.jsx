@@ -7,7 +7,7 @@ import {IconContext} from "react-icons";
 export default function Card({user , index}) {
     return (
      <div className="col-lg-3 col-md-6 col-sm-12 mb-3">
-         <div className="curve card" style={{backgroundImage:`url(${user.imageUrl})`,backgroundRrepeat: "no-repeat",
+         <div className="curve cards" style={{backgroundImage:`url(${user.imageUrl})`,backgroundRrepeat: "no-repeat",
           backgroundSize:"cover"}}> 
           <div className="footer">
               <div className="connections mb-2">

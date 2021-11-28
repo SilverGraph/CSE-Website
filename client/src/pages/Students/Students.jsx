@@ -55,7 +55,6 @@ export default function Students() {
             setSenior(false);
             getDetail(junos);
           }}>2021</button>
-           
           {senior ? seniors() : juniors()}
           </center>
     </div>

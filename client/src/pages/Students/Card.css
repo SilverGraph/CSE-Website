@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap');
 
-.card {
+.cards {
     border-radius: 8px;
     height: 400px;
     width: 260px;
@@ -21,7 +21,7 @@
     transition: opacity 0.15s ease-in;
 }
 
-.card:hover .card-blur {
+.cards:hover .card-blur {
     opacity: 0.6;
 }
 
@@ -60,7 +60,7 @@ svg.curve {
     transition: transform 1s cubic-bezier(.46, 1.48, .18, .81);
 }
 
-.card:hover .connection {
+.cards:hover .connection {
     transform: translateY(0px);
 }
 
@@ -73,7 +73,7 @@ svg.curve {
     transition: transform 1s cubic-bezier(.31,1.21,.64,1.02);
 }
 
-.card:hover .info {
+.cards:hover .info {
     transform: translateY(-50px);
 }
 
@@ -113,7 +113,7 @@ a{
 }
 
 @media screen and (max-width: 480px) {
-   .card{
+   .cards{
     height: 380px;
     width: 260px;
     margin-right: 20px;
