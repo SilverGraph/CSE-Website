@@ -4,6 +4,7 @@ from flask_login import LoginManager, login_manager, login_user, logout_user, lo
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
 from models import User
+import base64
 
 cors = flask_cors.CORS()
 
@@ -33,23 +34,31 @@ def register():
         req = request.args.to_dict()
         email = req.get('email', None)
         password = req.get('password', None)
-        photo_url = req.get('photo_url', None)
-        print(req['email'])
-
+        
         # Check for existing user
-        find_user = User.get_by_email(email)
-        if find_user is not None:
-            flash('Email address already exists')
-            print()
-            return jsonify(status = "User already exists"), 400
+        # find_user = User.get_by_email(email)
+        # if find_user is not None:
+        #     flash('Email address already exists')
+        #     print()
+        #     return jsonify(status = "User already exists"), 400
 
         pwd_hash = generate_password_hash(password, method="pbkdf2:sha256", salt_length=16)
+        
+        file = request.files['image_file']
+        file_stream = file.stream # Can be treated as a file object
+        encoded_string = base64.b64encode(file_stream.read())
+        encoded_string = 'top_secret'
+        file_content_type = file.content_type
+        
+        new_user = User(email, pwd_hash, image_encoded=encoded_string)
 
-        new_user = User(email, pwd_hash, photo_url)
-
+        # Save user to database
         if new_user:
-            new_user.save_to_mongo()
+            if file_content_type:
+                new_user.document['content_type'] = file_content_type
+            new_user.save_to_mongo(new_user.document)
             return jsonify(status="User registered successfully"), 200
+        
 
 # Login, Return request['next'] if it exists
 @app.route('/api/login', methods=['POST'])
