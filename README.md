@@ -22,7 +22,7 @@ A website for CSE freshers
 ```python -m venv ./virtual```
 
 - this creates a folder named 'virtual' which stores the necessary scripts, then run this command:
-```./virtual/Scripts/activate``` or ```source/virtual/Scripts/activate``` (for bash and replace the 'Scripts' with 'bin' for Linux)
+```./virtual/Scripts/activate``` or ```source virtual/Scripts/activate``` (for bash and replace the 'Scripts' with 'bin' for Linux)
 
 
 ### For installing modules:
