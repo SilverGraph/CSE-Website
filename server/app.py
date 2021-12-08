@@ -1,10 +1,13 @@
-from flask import Flask, request, jsonify, flash
+from flask import Flask, request, jsonify, flash, Response
+from flask.wrappers import Response
 import flask_cors
 from flask_login import LoginManager, login_manager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-import json
 from models import User
 import base64
+from database import Database
+from bson.objectid import ObjectId
+import gridfs
 
 cors = flask_cors.CORS()
 
@@ -17,6 +20,7 @@ cors = flask_cors.CORS()
 
 cors.init_app(app)
 login_manager.init_app(app)
+grid_fs = gridfs.GridFS(Database.db)
 
 
 @app.route('/')
@@ -31,10 +35,10 @@ def login():
 @app.route('/api/register', methods = ['POST'])
 def register():
     if request.method == 'POST':
-        req = request.args.to_dict()
+        req = request.form.to_dict()
         email = req.get('email', None)
         password = req.get('password', None)
-        
+
         # Check for existing user
         # find_user = User.get_by_email(email)
         # if find_user is not None:
@@ -44,20 +48,16 @@ def register():
 
         pwd_hash = generate_password_hash(password, method="pbkdf2:sha256", salt_length=16)
         
-        file = request.files['image_file']
-        file_stream = file.stream # Can be treated as a file object
-        encoded_string = base64.b64encode(file_stream.read())
-        encoded_string = 'top_secret'
-        file_content_type = file.content_type
+        file = request.files['image']
+        id = grid_fs.put(file, content_type = file.content_type, filename = email)
         
-        new_user = User(email, pwd_hash, image_encoded=encoded_string)
+        new_user = User(email, pwd_hash, _id = id)
 
         # Save user to database
         if new_user:
-            if file_content_type:
-                new_user.document['content_type'] = file_content_type
+            new_user.document['photo_url'] = 'localhost:5000/getimage/{}'.format(str(id))
             new_user.save_to_mongo(new_user.document)
-            return jsonify(status="User registered successfully"), 200
+            return jsonify(status="User registered successfully", id = str(new_user._id)), 200
         
 
 # Login, Return request['next'] if it exists
@@ -83,6 +83,15 @@ def api_login():
 
         login_user(user)
         return jsonify(status="Logged in successfully"), 200
+
+@app.route('/getimage/<id>')
+def getimage(id):
+    item = Database.col.find_one({'_id': ObjectId(id)})
+    print(item)
+    file = grid_fs.get(ObjectId(item['_id']))
+    
+    return Response(file.read(), mimetype=file.content_type)
+
 
 # Logout current user
 @app.route('/api/logout')
