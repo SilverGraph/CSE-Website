@@ -1,13 +1,13 @@
-from flask import Flask, request, jsonify, flash, Response
-from flask.wrappers import Response
 import flask_cors
-from flask_login import LoginManager, login_manager, login_user, logout_user, login_required, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
-from models import User
+import gridfs
 import base64
+from models import User
 from database import Database
 from bson.objectid import ObjectId
-import gridfs
+from flask.wrappers import Response
+from flask import Flask, request, jsonify, flash, Response
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import LoginManager, login_manager, login_user, logout_user, login_required, current_user
 
 cors = flask_cors.CORS()
 
@@ -87,7 +87,7 @@ def api_login():
 @app.route('/getimage/<id>')
 def getimage(id):
     item = Database.col.find_one({'_id': ObjectId(id)})
-    print(item)
+    # print(item)
     file = grid_fs.get(ObjectId(item['_id']))
     
     return Response(file.read(), mimetype=file.content_type)
