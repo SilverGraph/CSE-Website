@@ -4,7 +4,6 @@ import flask_cors
 from flask_login import LoginManager, login_manager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import User
-import base64
 from database import Database
 from bson.objectid import ObjectId
 import gridfs
@@ -23,14 +22,6 @@ login_manager.init_app(app)
 grid_fs = gridfs.GridFS(Database.db)
 
 
-@app.route('/')
-def home():
-    return "success" ,  200
-
-@app.route('/login')    
-def login():
-    return 'success', 200
-
 # Register new user, Return request['next'] if it exists
 @app.route('/api/register', methods = ['POST'])
 def register():
@@ -43,7 +34,6 @@ def register():
         find_user = User.get_by_email(email)
         if find_user is not None:
             flash('Email address already exists')
-            print()
             return jsonify(status = "User already exists"), 400
 
         pwd_hash = generate_password_hash(password, method="pbkdf2:sha256", salt_length=16)
@@ -77,18 +67,17 @@ def api_login():
         
         # Check Password, match with hash
         pwd_check = user.validate_password(email, password)
-        print(pwd_check)
+        
         if pwd_check == False:
             flash('Incorrect Password')
             return jsonify(status="Password Incorrect"), 400
         login_user(user)
-        print(user.document)
 
         return jsonify(status="Logged in successfully"), 200
 
 @app.route('/getimage/<id>')
 def getimage(id):
-    item = Database.col.find_one({'_id': id})
+    item = Database.col.find_one({'_id': ObjectId(id)})
     
     file = grid_fs.get(ObjectId(item['_id']))
     
@@ -99,7 +88,6 @@ def getimage(id):
 @app.route('/api/logout')
 @login_required
 def logout():
-    # print(current_user.email)
     logout_user()
     return jsonify(status="Logged out successfully"), 200
 

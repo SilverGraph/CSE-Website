@@ -2,7 +2,7 @@ from datetime import datetime
 from pymongo.common import validate
 from werkzeug.security import check_password_hash
 from database import Database
-import uuid
+from bson.objectid import ObjectId
 
 
 class User:
@@ -13,6 +13,7 @@ class User:
         self.pwd_hash = pwd_hash 
         if photo_url:
             self.photo_url = photo_url
+        self._id = str(_id)
         self.content_type = content_type
 
         # Date Created
@@ -36,7 +37,7 @@ class User:
 
     def generate_document(self):
         # Use this in collection.insert_one()
-        self.document = {'_id': self._id, 'email': self.email, 'pwd_hash': self.pwd_hash, 'date_created': self.date_created, 'content_type': self.content_type}
+        self.document = {'_id': ObjectId(self._id), 'email': self.email, 'pwd_hash': self.pwd_hash, 'date_created': self.date_created, 'content_type': self.content_type}
 
     @staticmethod
     def validate_password(email, password_string):
@@ -56,8 +57,7 @@ class User:
 
     @classmethod
     def get_by_id(cls, _id):
-        data = Database.col.find_one({'_id': _id})
-        print(data)
+        data = Database.col.find_one({'_id': ObjectId(_id)})
         if data is not None:
             return User(**data)
 
