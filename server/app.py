@@ -38,11 +38,7 @@ def register():
         req = request.form.to_dict()
         email = req.get('email', None)
         password = req.get('password', None)
-<<<<<<< HEAD
-        print(req)
-=======
 
->>>>>>> gridfs
         # Check for existing user
         # find_user = User.get_by_email(email)
         # if find_user is not None:
@@ -53,13 +49,7 @@ def register():
         pwd_hash = generate_password_hash(password, method="pbkdf2:sha256", salt_length=16)
         
         file = request.files['image']
-<<<<<<< HEAD
-        file_stream = file.stream # Can be treated as a file object
-        encoded_string = base64.b64encode(file_stream.read())
-        file_content_type = file.content_type
-=======
         id = grid_fs.put(file, content_type = file.content_type, filename = email)
->>>>>>> gridfs
         
         new_user = User(email, pwd_hash, _id = id)
 
@@ -67,11 +57,7 @@ def register():
         if new_user:
             new_user.document['photo_url'] = 'localhost:5000/getimage/{}'.format(str(id))
             new_user.save_to_mongo(new_user.document)
-<<<<<<< HEAD
-            return jsonify(status="User registered successfully", id = new_user._id), 200
-=======
             return jsonify(status="User registered successfully", id = str(new_user._id)), 200
->>>>>>> gridfs
         
 
 # Login, Return request['next'] if it exists
@@ -98,42 +84,6 @@ def api_login():
         login_user(user)
         return jsonify(status="Logged in successfully"), 200
 
-<<<<<<< HEAD
-#----------------------------------------------------------------------
-# Test
-
-# @app.route('/getimage/<ID>')
-# def get_image(ID):
-#     item = Database.col.find_one({'_id': ID})
-#     base64_data = item['image_encoded']
-#     imgtype = item['content_type']
-#     # base64_data = codecs.encode(image.read(), 'base64')
-#     decoded_string = base64.b64decode(base64_data)
-
-#     return Response(decoded_string, mimetype=imgtype)
-
-#-------------------------------------------------------------------------
-
-
-@app.route('/image/', methods = ["POST"])
-def saveImage():
-    if 'image' in request.files:
-        image = request.files['image']
-        name = request.form.get('name')
-        id = grid_fs.put(image, content_type = image.content_type, filename = name)
-        imgtype = image.content_type
-    query = {
-        '_id' : id,
-        'name': name + str(id),
-        'imgtype': imgtype,
-        # 'desc':request.form.get('desc'),
-    }
-    # item = Database.col.find_one({'id': id})
-    status = Database.insert(query)
-    return jsonify(status = 'OK', id=str(id))
-
-=======
->>>>>>> gridfs
 @app.route('/getimage/<id>')
 def getimage(id):
     item = Database.col.find_one({'_id': ObjectId(id)})
@@ -143,15 +93,6 @@ def getimage(id):
     return Response(file.read(), mimetype=file.content_type)
 
 
-<<<<<<< HEAD
-
-
-
-
-
-
-=======
->>>>>>> gridfs
 # Logout current user
 @app.route('/api/logout')
 @login_required
