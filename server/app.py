@@ -38,7 +38,11 @@ def register():
         req = request.form.to_dict()
         email = req.get('email', None)
         password = req.get('password', None)
+<<<<<<< HEAD
         print(req)
+=======
+
+>>>>>>> gridfs
         # Check for existing user
         # find_user = User.get_by_email(email)
         # if find_user is not None:
@@ -49,18 +53,25 @@ def register():
         pwd_hash = generate_password_hash(password, method="pbkdf2:sha256", salt_length=16)
         
         file = request.files['image']
+<<<<<<< HEAD
         file_stream = file.stream # Can be treated as a file object
         encoded_string = base64.b64encode(file_stream.read())
         file_content_type = file.content_type
+=======
+        id = grid_fs.put(file, content_type = file.content_type, filename = email)
+>>>>>>> gridfs
         
-        new_user = User(email, pwd_hash, image_encoded=encoded_string)
+        new_user = User(email, pwd_hash, _id = id)
 
         # Save user to database
         if new_user:
-            if file_content_type:
-                new_user.document['content_type'] = file_content_type
+            new_user.document['photo_url'] = 'localhost:5000/getimage/{}'.format(str(id))
             new_user.save_to_mongo(new_user.document)
+<<<<<<< HEAD
             return jsonify(status="User registered successfully", id = new_user._id), 200
+=======
+            return jsonify(status="User registered successfully", id = str(new_user._id)), 200
+>>>>>>> gridfs
         
 
 # Login, Return request['next'] if it exists
@@ -87,6 +98,7 @@ def api_login():
         login_user(user)
         return jsonify(status="Logged in successfully"), 200
 
+<<<<<<< HEAD
 #----------------------------------------------------------------------
 # Test
 
@@ -120,6 +132,8 @@ def saveImage():
     status = Database.insert(query)
     return jsonify(status = 'OK', id=str(id))
 
+=======
+>>>>>>> gridfs
 @app.route('/getimage/<id>')
 def getimage(id):
     item = Database.col.find_one({'_id': ObjectId(id)})
@@ -129,12 +143,15 @@ def getimage(id):
     return Response(file.read(), mimetype=file.content_type)
 
 
+<<<<<<< HEAD
 
 
 
 
 
 
+=======
+>>>>>>> gridfs
 # Logout current user
 @app.route('/api/logout')
 @login_required
