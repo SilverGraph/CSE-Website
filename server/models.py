@@ -56,6 +56,12 @@ class User:
         data = Database.col.find_one({'_id': _id})
         if data is not None:
             return User(**data)
+        
+    @classmethod
+    def delete_user(cls, email):
+        data = Database.col.find_one({'email' : email})
+        if data is not None:
+            Database.delete(email)
 
     def save_to_mongo(self):
         Database.insert(self.get_document())

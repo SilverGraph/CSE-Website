@@ -7,7 +7,8 @@ class Database:
 
     @classmethod
     def insert(cls, document):
-        cls.col.insert_one(document)
+        temp = cls.col.insert_one(document)
+        return temp
 
     @classmethod
     def delete(cls, email):
