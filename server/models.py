@@ -8,12 +8,12 @@ import uuid
 class User:
     """The User model"""
 
-    def __init__(self, email, pwd_hash, _id = None, date_created=None, image_encoded = None, content_type = 'image/jpeg', photo_url = None) -> None:
+    def __init__(self, email, pwd_hash, _id = None, date_created=None, content_type = 'image/jpeg', photo_url = None) -> None:
         self.email = email
         self.pwd_hash = pwd_hash 
-        # self.photo_url = photo_url
+        if photo_url:
+            self.photo_url = photo_url
         self._id = uuid.uuid4().hex if _id is None else _id
-        self.image_encoded = image_encoded
         self.content_type = content_type
 
         # Date Created
@@ -37,7 +37,7 @@ class User:
 
     def generate_document(self):
         # Use this in collection.insert_one()
-        self.document = {'_id': self._id, 'email': self.email, 'pwd_hash': self.pwd_hash, 'date_created': self.date_created, 'image_encoded': self.image_encoded, 'content_type': self.content_type}
+        self.document = {'_id': self._id, 'email': self.email, 'pwd_hash': self.pwd_hash, 'date_created': self.date_created, 'content_type': self.content_type}
 
     @staticmethod
     def validate_password(email, password_string):
