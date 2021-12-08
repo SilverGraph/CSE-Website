@@ -40,11 +40,11 @@ def register():
         password = req.get('password', None)
 
         # Check for existing user
-        # find_user = User.get_by_email(email)
-        # if find_user is not None:
-        #     flash('Email address already exists')
-        #     print()
-        #     return jsonify(status = "User already exists"), 400
+        find_user = User.get_by_email(email)
+        if find_user is not None:
+            flash('Email address already exists')
+            print()
+            return jsonify(status = "User already exists"), 400
 
         pwd_hash = generate_password_hash(password, method="pbkdf2:sha256", salt_length=16)
         
