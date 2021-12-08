@@ -8,11 +8,13 @@ import uuid
 class User:
     """The User model"""
 
-    def __init__(self, email, pwd_hash, photo_url, _id = None, date_created=None) -> None:
+    def __init__(self, email, pwd_hash, _id = None, date_created=None, image_encoded = None, content_type = 'image/jpeg', photo_url = None) -> None:
         self.email = email
         self.pwd_hash = pwd_hash 
-        self.photo_url = photo_url
+        # self.photo_url = photo_url
         self._id = uuid.uuid4().hex if _id is None else _id
+        self.image_encoded = image_encoded
+        self.content_type = content_type
 
         # Date Created
         if date_created is None:
@@ -21,6 +23,8 @@ class User:
             self.date_created = _date_created
         else:
             self.date_created = date_created
+
+        self.generate_document()
 
     def is_authenticated(self):
         return True
@@ -31,9 +35,9 @@ class User:
     def get_id(self):
         return self._id
 
-    def get_document(self):
+    def generate_document(self):
         # Use this in collection.insert_one()
-        return {'_id': self._id, 'email': self.email, 'pwd_hash': self.pwd_hash, 'photo_url': self.photo_url, 'date_created': self.date_created}
+        self.document = {'_id': self._id, 'email': self.email, 'pwd_hash': self.pwd_hash, 'date_created': self.date_created, 'image_encoded': self.image_encoded, 'content_type': self.content_type}
 
     @staticmethod
     def validate_password(email, password_string):
@@ -57,8 +61,11 @@ class User:
         if data is not None:
             return User(**data)
 
-    def save_to_mongo(self):
-        Database.insert(self.get_document())
+    def save_to_mongo(self, document=None):
+        if document:
+            Database.insert(document)
+        else:
+            Database.insert(self.document)
 
 if __name__ == "__main__":
     test = User.get_by_email('karish.fafgfgdfke@gmail.com')
