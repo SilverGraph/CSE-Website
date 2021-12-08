@@ -64,30 +64,32 @@ def register():
 @app.route('/api/login', methods=['POST'])
 def api_login():
     if request.method == 'POST':
-        req = request.args.to_dict()
+        req = request.form.to_dict()
         email = req.get('email', None)
         password = req.get('password', None)
 
         # Check if user exists
         user = User.get_by_email(email)
+
         if user is None:
             flash('Incorrect Login Details')
-            jsonify(status="Incorrect login details"), 400
+            return jsonify(status="Incorrect login details"), 400
         
         # Check Password, match with hash
         pwd_check = user.validate_password(email, password)
-
+        print(pwd_check)
         if pwd_check == False:
             flash('Incorrect Password')
-            jsonify(status="Password"), 400
-
+            return jsonify(status="Password Incorrect"), 400
         login_user(user)
+        print(user.document)
+
         return jsonify(status="Logged in successfully"), 200
 
 @app.route('/getimage/<id>')
 def getimage(id):
-    item = Database.col.find_one({'_id': ObjectId(id)})
-    print(item)
+    item = Database.col.find_one({'_id': id})
+    
     file = grid_fs.get(ObjectId(item['_id']))
     
     return Response(file.read(), mimetype=file.content_type)
@@ -111,7 +113,7 @@ def unauth():
 
 @login_manager.user_loader
 def load_user(user_id):
-    user = User.get_by_id(user_id)
+    user = User.get_by_id((user_id))
     if user is not None:
         return user
     else:

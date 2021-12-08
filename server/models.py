@@ -13,7 +13,6 @@ class User:
         self.pwd_hash = pwd_hash 
         if photo_url:
             self.photo_url = photo_url
-        self._id = uuid.uuid4().hex if _id is None else _id
         self.content_type = content_type
 
         # Date Created
@@ -58,6 +57,7 @@ class User:
     @classmethod
     def get_by_id(cls, _id):
         data = Database.col.find_one({'_id': _id})
+        print(data)
         if data is not None:
             return User(**data)
 
