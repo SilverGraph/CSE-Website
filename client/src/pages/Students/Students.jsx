@@ -3,6 +3,7 @@ import Card from "./Card";
 import "./Students.css";
 import {senos}from "./senior";
 import {junos} from "./junior";
+import BgStars from "../../components/background/BgStars";
 
 
 export default function Students() {
@@ -40,12 +41,14 @@ export default function Students() {
     )
   }
   return (
-    <div className="studentHome mt-3">
+    <>
+    <BgStars />
+    <div style={{zIndex: '1'}} className="studentHome mt-3">
       <center>
         <div className="student">
       . KNOW . CONNECT . GROW .
         </div>
-      <button className=" btn btn-outline-secondary bttn mx-2 px-4" onClick={() => {
+      <button style={{zIndex: '1'}} className=" btn btn-outline-secondary bttn mx-2 px-4" onClick={() => {
        setSenior(true);
        getDetail(senos);
       }
@@ -58,6 +61,7 @@ export default function Students() {
           {senior ? seniors() : juniors()}
           </center>
     </div>
+    </>
   )
 }
 
