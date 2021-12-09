@@ -1,6 +1,7 @@
 import flask_cors
 import gridfs
-import base64
+import json
+
 from models import User
 from database import Database
 from bson.objectid import ObjectId
@@ -23,14 +24,6 @@ login_manager.init_app(app)
 grid_fs = gridfs.GridFS(Database.db)
 
 
-@app.route('/')
-def home():
-    return "success" ,  200
-
-@app.route('/login')    
-def login():
-    return 'success', 200
-
 # Register new user, Return request['next'] if it exists
 @app.route('/api/register', methods = ['POST'])
 def register():
@@ -43,7 +36,6 @@ def register():
         find_user = User.get_by_email(email)
         if find_user is not None:
             flash('Email address already exists')
-            print()
             return jsonify(status = "User already exists"), 400
 
         pwd_hash = generate_password_hash(password, method="pbkdf2:sha256", salt_length=16)
@@ -64,24 +56,25 @@ def register():
 @app.route('/api/login', methods=['POST'])
 def api_login():
     if request.method == 'POST':
-        req = request.args.to_dict()
+        req = request.form.to_dict()
         email = req.get('email', None)
         password = req.get('password', None)
 
         # Check if user exists
         user = User.get_by_email(email)
+
         if user is None:
             flash('Incorrect Login Details')
-            jsonify(status="Incorrect login details"), 400
+            return jsonify(status="Incorrect login details"), 400
         
         # Check Password, match with hash
         pwd_check = user.validate_password(email, password)
-
+        
         if pwd_check == False:
             flash('Incorrect Password')
-            jsonify(status="Password"), 400
-
+            return jsonify(status="Password Incorrect"), 400
         login_user(user)
+
         return jsonify(status="Logged in successfully"), 200
 
 @app.route('/getimage/<id>')
@@ -97,9 +90,25 @@ def getimage(id):
 @app.route('/api/logout')
 @login_required
 def logout():
-    # print(current_user.email)
     logout_user()
     return jsonify(status="Logged out successfully"), 200
+
+@app.route('/students/2021')
+def get_batch21():
+    cursor = Database.col.find()
+    l={}
+    for item in cursor:
+        m={}
+        m.append(item['email'])
+        m.append(item['date_created'])
+        m.append(item['photo_url'])
+        l.append(m) 
+        # print(item['email'])
+        # print(item['date_created'])
+        # print(item['photo_url'])
+        
+        # print(json.dumps(str(item), indent=4, sort_keys=True))
+    return jsonify(users=l), 200
 
 @app.route('/test')
 def test():
@@ -111,7 +120,7 @@ def unauth():
 
 @login_manager.user_loader
 def load_user(user_id):
-    user = User.get_by_id(user_id)
+    user = User.get_by_id((user_id))
     if user is not None:
         return user
     else:
