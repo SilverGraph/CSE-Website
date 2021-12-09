@@ -4,13 +4,14 @@ from werkzeug.security import check_password_hash
 from database import Database
 from bson.objectid import ObjectId
 
-
 class User:
     """The User model"""
 
-    def __init__(self, email, pwd_hash, _id = None, date_created=None, content_type = 'image/jpeg', photo_url = None) -> None:
+    def __init__(self, name, email, pwd_hash, roll, _id = None, date_created=None, content_type = 'image/jpeg', photo_url = None) -> None:
+        self.name = name
         self.email = email
         self.pwd_hash = pwd_hash 
+        self.roll = roll
         if photo_url:
             self.photo_url = photo_url
         self._id = str(_id)
@@ -37,7 +38,15 @@ class User:
 
     def generate_document(self):
         # Use this in collection.insert_one()
-        self.document = {'_id': ObjectId(self._id), 'email': self.email, 'pwd_hash': self.pwd_hash, 'date_created': self.date_created, 'content_type': self.content_type}
+        self.document = {
+            '_id': ObjectId(self._id),
+            'name' : self.name, 
+            'roll': self.roll ,
+            'email': self.email, 
+            'pwd_hash': self.pwd_hash, 
+            'date_created': self.date_created, 
+            'content_type': self.content_type
+        }
 
     @staticmethod
     def validate_password(email, password_string):

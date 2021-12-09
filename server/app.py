@@ -1,7 +1,6 @@
 import flask_cors
 import gridfs
 import json
-
 from models import User
 from database import Database
 from bson.objectid import ObjectId
@@ -29,8 +28,10 @@ grid_fs = gridfs.GridFS(Database.db)
 def register():
     if request.method == 'POST':
         req = request.form.to_dict()
+        name = req.get('name', None)
         email = req.get('email', None)
         password = req.get('password', None)
+        roll = req.get('roll', None)
 
         # Check for existing user
         find_user = User.get_by_email(email)
@@ -43,7 +44,7 @@ def register():
         file = request.files['image']
         id = grid_fs.put(file, content_type = file.content_type, filename = email)
         
-        new_user = User(email, pwd_hash, _id = id)
+        new_user = User(name, email, pwd_hash, roll, _id = id)
 
         # Save user to database
         if new_user:
@@ -98,19 +99,16 @@ def get_batch21():
     cursor = Database.col.find()
     l={}
     for item in cursor:
-        m={}
-        m.append(item['email'])
-        m.append(item['date_created'])
-        m.append(item['photo_url'])
-        l.append(m) 
-        # print(item['email'])
-        # print(item['date_created'])
-        # print(item['photo_url'])
-        
-        # print(json.dumps(str(item), indent=4, sort_keys=True))
-    return jsonify(users=l), 200
+        roll_id = item['roll']
+        l[roll_id] = {}
+        l[roll_id]['name'] = item['name']
+        l[roll_id]['email'] = item['email']
+        l[roll_id]['date'] = item['date_created']
+        l[roll_id]['photo_url'] = item['photo_url']
 
-@app.route('/test')
+    return jsonify(batch_21=l), 200
+
+@app.route('/test') 
 def test():
     return jsonify(response = "api call successful"), 200
 
