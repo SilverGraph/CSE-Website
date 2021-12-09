@@ -2,17 +2,20 @@ from datetime import datetime
 from pymongo.common import validate
 from werkzeug.security import check_password_hash
 from database import Database
-import uuid
-
+from bson.objectid import ObjectId
 
 class User:
     """The User model"""
 
-    def __init__(self, email, pwd_hash, photo_url, _id = None, date_created=None) -> None:
+    def __init__(self, name, email, pwd_hash, roll, _id = None, date_created=None, content_type = 'image/jpeg', photo_url = None) -> None:
+        self.name = name
         self.email = email
         self.pwd_hash = pwd_hash 
-        self.photo_url = photo_url
-        self._id = uuid.uuid4().hex if _id is None else _id
+        self.roll = roll
+        if photo_url:
+            self.photo_url = photo_url
+        self._id = str(_id)
+        self.content_type = content_type
 
         # Date Created
         if date_created is None:
@@ -21,6 +24,8 @@ class User:
             self.date_created = _date_created
         else:
             self.date_created = date_created
+
+        self.generate_document()
 
     def is_authenticated(self):
         return True
@@ -31,9 +36,17 @@ class User:
     def get_id(self):
         return self._id
 
-    def get_document(self):
+    def generate_document(self):
         # Use this in collection.insert_one()
-        return {'_id': self._id, 'email': self.email, 'pwd_hash': self.pwd_hash, 'photo_url': self.photo_url, 'date_created': self.date_created}
+        self.document = {
+            '_id': ObjectId(self._id),
+            'name' : self.name, 
+            'roll': self.roll ,
+            'email': self.email, 
+            'pwd_hash': self.pwd_hash, 
+            'date_created': self.date_created, 
+            'content_type': self.content_type
+        }
 
     @staticmethod
     def validate_password(email, password_string):
@@ -53,12 +66,15 @@ class User:
 
     @classmethod
     def get_by_id(cls, _id):
-        data = Database.col.find_one({'_id': _id})
+        data = Database.col.find_one({'_id': ObjectId(_id)})
         if data is not None:
             return User(**data)
 
-    def save_to_mongo(self):
-        Database.insert(self.get_document())
+    def save_to_mongo(self, document=None):
+        if document:
+            Database.insert(document)
+        else:
+            Database.insert(self.document)
 
 if __name__ == "__main__":
     test = User.get_by_email('karish.fafgfgdfke@gmail.com')
