@@ -32,6 +32,7 @@ def register():
         email = req.get('email', None)
         password = req.get('password', None)
         roll = req.get('roll', None)
+        batch = req.get('batch', None)
 
         # Check for existing user
         find_user = User.get_by_email(email)
@@ -44,12 +45,13 @@ def register():
         file = request.files['image']
         id = grid_fs.put(file, content_type = file.content_type, filename = email)
         
-        new_user = User(name, email, pwd_hash, roll, _id = id)
+        new_user = User(name, email, pwd_hash, roll, _id = id, batch = batch)
 
         # Save user to database
         if new_user:
             new_user.document['photo_url'] = 'localhost:5000/getimage/{}'.format(str(id))
             new_user.save_to_mongo(new_user.document)
+            login_user(new_user)
             return jsonify(status="User registered successfully", id = str(new_user._id)), 200
         
 
@@ -94,9 +96,10 @@ def logout():
     logout_user()
     return jsonify(status="Logged out successfully"), 200
 
-@app.route('/students/2021')
-def get_batch21():
-    cursor = Database.col.find()
+@app.route('/students/<batch>')
+@login_required
+def get_batch21(batch):
+    cursor = Database.col.find({'batch': batch})
     l={}
     for item in cursor:
         roll_id = item['roll']
@@ -106,7 +109,7 @@ def get_batch21():
         l[roll_id]['date'] = item['date_created']
         l[roll_id]['photo_url'] = item['photo_url']
 
-    return jsonify(batch_21=l), 200
+    return jsonify(students=l), 200
 
 @app.route('/test') 
 def test():
