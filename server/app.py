@@ -5,7 +5,7 @@ from models import User
 from database import Database
 from bson.objectid import ObjectId
 from flask.wrappers import Response
-from flask import Flask, request, jsonify, flash, Response
+from flask import Flask, request, jsonify, flash, Response, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_manager, login_user, logout_user, login_required, current_user
 
@@ -26,13 +26,13 @@ grid_fs = gridfs.GridFS(Database.db)
 @app.route('/api/register', methods = ['POST'])
 def register():
     if request.method == 'POST':
-        req = request.headers
+        req = request.form.to_dict()
         name = req.get('Name', None)
         email = req.get('Email', None)
         password = req.get('Password', None)
         roll = req.get('Roll', None)
         batch = req.get('Batch', None)
-
+        print(password)
         # Check for existing user
         find_user = User.get_by_email(email)
         if find_user is not None:
@@ -51,6 +51,7 @@ def register():
             new_user.document['photo_url'] = 'localhost:5000/getimage/{}'.format(str(id))
             new_user.save_to_mongo(new_user.document)
             login_user(new_user)
+            session['id'] = new_user._id
             return jsonify(status="User registered successfully", id = str(new_user._id)), 200
         
 
@@ -78,6 +79,7 @@ def api_login():
             flash('Incorrect Password')
             return jsonify(status="Password Incorrect"), 400
         login_user(user)
+        session['id'] = user._id
         return jsonify(status="Logged in successfully"), 200
             
 
@@ -95,6 +97,7 @@ def getimage(id):
 @login_required
 def logout():
     logout_user()
+    session.pop('id', None)
     return jsonify(status="Logged out successfully"), 200
 
 @app.route('/students/<batch>')
@@ -118,7 +121,10 @@ def test():
 
 @app.route('/api/checklogin')
 def check_login():
-    return str(current_user.is_authenticated)
+    if 'id' in session:
+        return "True"
+    else:
+        return "False"
 
 @login_manager.unauthorized_handler
 def unauth():
