@@ -7,7 +7,7 @@ from bson.objectid import ObjectId
 from flask.wrappers import Response
 from flask import Flask, request, jsonify, flash, Response
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager, login_manager, login_user, logout_user, login_required
+from flask_login import LoginManager, login_manager, login_user, logout_user, login_required, current_user
 
 
 app = Flask(__name__)
@@ -27,7 +27,6 @@ grid_fs = gridfs.GridFS(Database.db)
 def register():
     if request.method == 'POST':
         req = request.headers
-        print(req)
         name = req.get('Name', None)
         email = req.get('Email', None)
         password = req.get('Password', None)
@@ -58,6 +57,8 @@ def register():
 # Login, Return request['next'] if it exists
 @app.route('/api/login', methods=['POST', 'GET'])
 def api_login():
+    if current_user.is_authenticated:
+        return jsonify(status = "Already logged in")
     if request.method == 'POST':
         req = request.form.to_dict()
         email = req.get('email', None)
@@ -77,10 +78,6 @@ def api_login():
             flash('Incorrect Password')
             return jsonify(status="Password Incorrect"), 400
         login_user(user)
-        if user.is_authenticated:
-            print("already logged in")
-        else:
-            print("new login")
         return jsonify(status="Logged in successfully"), 200
             
 
@@ -118,6 +115,10 @@ def get_batch21(batch):
 @app.route('/test') 
 def test():
     return jsonify(response = "api call successful"), 200
+
+@app.route('/api/checklogin')
+def check_login():
+    return str(current_user.is_authenticated)
 
 @login_manager.unauthorized_handler
 def unauth():
