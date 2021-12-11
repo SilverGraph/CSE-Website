@@ -9,6 +9,7 @@ import {
   FormControl,
   TextField,
 } from "@mui/material"
+import axios from "axios"
 // import CloseIcon from "@mui/icons-material/Close";
 // import GoogleIcon from "@mui/icons-material/Google";
 import { createTheme, ThemeProvider } from "@mui/material/styles"
@@ -25,7 +26,23 @@ export default function Login() {
   const [mail, setMail] = useState();
   const [pass, setPass] = useState();
 
-  function handleSubmit() {
+  var formData = new FormData()
+  formData.append('email', "random3@email.com");   //append the values with key, value pair
+  formData.append('password', "random");
+  
+  async function handleSubmit() {
+    await axios({
+      method: 'post',
+      url: 'http://127.0.0.1:5000/api/login',
+      data: formData,
+      headers:{"Content-Type": "multipart/form-data"}, 
+      withCredentials: true
+    }).then((props) => {
+        console.log(props)
+    }).catch(function (response) {
+      //handle error
+      console.log(response);
+    });
       // axios calls and other checks
   }
 

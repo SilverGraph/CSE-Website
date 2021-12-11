@@ -1,4 +1,4 @@
-import flask_cors
+from flask_cors import CORS, cross_origin
 import gridfs
 import json
 from models import User
@@ -9,17 +9,16 @@ from flask import Flask, request, jsonify, flash, Response
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_manager, login_user, logout_user, login_required
 
-cors = flask_cors.CORS()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'top secret'
+app.config['CORS_HEADERS'] = 'Content-Type' 
 
+cors = CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 login_manager = LoginManager(app)
 login_manager.login_view = 'api_login'
-cors = flask_cors.CORS()
-
-cors.init_app(app)
 login_manager.init_app(app)
+
 grid_fs = gridfs.GridFS(Database.db)
 
 
@@ -27,12 +26,13 @@ grid_fs = gridfs.GridFS(Database.db)
 @app.route('/api/register', methods = ['POST'])
 def register():
     if request.method == 'POST':
-        req = request.form.to_dict()
-        name = req.get('name', None)
-        email = req.get('email', None)
-        password = req.get('password', None)
-        roll = req.get('roll', None)
-        batch = req.get('batch', None)
+        req = request.headers
+        print(req)
+        name = req.get('Name', None)
+        email = req.get('Email', None)
+        password = req.get('Password', None)
+        roll = req.get('Roll', None)
+        batch = req.get('Batch', None)
 
         # Check for existing user
         find_user = User.get_by_email(email)
