@@ -50,9 +50,9 @@ export default function Login() {
     await axios.get("http://127.0.0.1:5000/api/checklogin")
       .then((props) => {
         console.log(props)
-        if (props.data === "True") {
-          window.location= "/"
-        }
+        // if (props=== "True") {
+        //   window.location= "/"
+        // }
     })
   }
 

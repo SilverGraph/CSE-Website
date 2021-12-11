@@ -5,7 +5,7 @@ from models import User
 from database import Database
 from bson.objectid import ObjectId
 from flask.wrappers import Response
-from flask import Flask, request, jsonify, flash, Response
+from flask import Flask, request, jsonify, flash, Response, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_manager, login_user, logout_user, login_required, current_user
 
@@ -51,7 +51,8 @@ def register():
         if new_user:
             new_user.document['photo_url'] = 'localhost:5000/getimage/{}'.format(str(id))
             new_user.save_to_mongo(new_user.document)
-            login_user(new_user, remember=True)
+            login_user(new_user,remember=True)
+            session['id'] = new_user._id
             return jsonify(status="User registered successfully", id = str(new_user._id)), 200
         
 
@@ -78,8 +79,9 @@ def api_login():
         if pwd_check == False:
             flash('Incorrect Password')
             return jsonify(status="Password Incorrect"), 400
-        login_user(user, remember=True)
-        return jsonify(status="Logged in successfully", id = str(user._id)), 200
+        login_user(user,remember=True)
+        session['id'] = user._id
+        return jsonify(status="Logged in successfully"), 200
             
 
 @app.route('/getimage/<id>')
@@ -96,6 +98,7 @@ def getimage(id):
 @login_required
 def logout():
     logout_user()
+    session.pop('id', None)
     return jsonify(status="Logged out successfully"), 200
 
 @app.route('/students/<batch>')
@@ -119,8 +122,11 @@ def test():
 
 @app.route('/api/checklogin')
 def check_login():
-    print(current_user)
-    return str(current_user.is_authenticated)
+    # print(session['id'])
+    if 'id' in session:
+        return "True"
+    else:
+        return "False"
 
 @login_manager.unauthorized_handler
 def unauth():
