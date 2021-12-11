@@ -23,8 +23,8 @@ const darkTheme = createTheme({
 })
 
 export default function Login() {
-  const [mail, setMail] = useState();
-  const [pass, setPass] = useState();
+  const [mail, setMail] = useState("");
+  const [pass, setPass] = useState("");
 
   var formData = new FormData()
   formData.append('email', mail);   //append the values with key, value pair
@@ -38,12 +38,22 @@ export default function Login() {
       headers:{"Content-Type": "multipart/form-data"}, 
       withCredentials: true
     }).then((props) => {
-        console.log(props)
+      console.log(props)
+      // localStorage.setItem('userid', props.data.id)
+      // window.location= "/"
     }).catch(function (response) {
       //handle error
       console.log(response);
     });
       // axios calls and other checks
+    
+    await axios.get("http://127.0.0.1:5000/api/checklogin")
+      .then((props) => {
+        console.log(props)
+        // if (props=== "True") {
+        //   window.location= "/"
+        // }
+    })
   }
 
   return (
