@@ -27,7 +27,6 @@ grid_fs = gridfs.GridFS(Database.db)
 def register():
     if request.method == 'POST':
         req = request.headers
-        print(req)
         name = req.get('Name', None)
         email = req.get('Email', None)
         password = req.get('Password', None)
