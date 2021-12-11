@@ -27,8 +27,8 @@ export default function Login() {
   const [pass, setPass] = useState();
 
   var formData = new FormData()
-  formData.append('email', "random3@email.com");   //append the values with key, value pair
-  formData.append('password', "random");
+  formData.append('email', mail);   //append the values with key, value pair
+  formData.append('password', pass);
   
   async function handleSubmit() {
     await axios({
@@ -83,7 +83,7 @@ export default function Login() {
                   variant="standard"
                   margin="dense"
                   value={mail}
-                  onChange={(e)=>setMail(e.value)}
+                  onChange={(e)=>setMail(e.target.value)}
                 />
                 <TextField
                   id="Password"
@@ -93,7 +93,7 @@ export default function Login() {
                   variant="standard"
                   margin="dense"
                   value={pass}
-                  onChange={(e)=>setPass(e.value)}
+                  onChange={(e)=>setPass(e.target.value)}
                 />
               </FormControl>
             </CardContent>
