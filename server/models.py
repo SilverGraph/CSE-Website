@@ -3,8 +3,9 @@ from pymongo.common import validate
 from werkzeug.security import check_password_hash
 from database import Database
 from bson.objectid import ObjectId
+from flask_login import UserMixin
 
-class User:
+class User(UserMixin):
     """The User model"""
 
     def __init__(self, name, email, pwd_hash, roll, _id = None, date_created=None, content_type = 'image/jpeg', photo_url = None, batch = None) -> None:
@@ -17,6 +18,7 @@ class User:
         self._id = str(_id)
         self.content_type = content_type
         self.batch = batch
+        self.id = _id
 
         # Date Created
         if date_created is None:
@@ -27,15 +29,6 @@ class User:
             self.date_created = date_created
 
         self.generate_document()
-
-    def is_authenticated(self):
-        return True
-    def is_active(self):
-        return True
-    def is_anonymous(self):
-        return False
-    def get_id(self):
-        return self._id
 
     def generate_document(self):
         # Use this in collection.insert_one()
