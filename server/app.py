@@ -1,4 +1,4 @@
-import flask_cors
+from flask_cors import CORS, cross_origin
 import gridfs
 import json
 from models import User
@@ -7,19 +7,18 @@ from bson.objectid import ObjectId
 from flask.wrappers import Response
 from flask import Flask, request, jsonify, flash, Response
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager, login_manager, login_user, logout_user, login_required
+from flask_login import LoginManager, login_manager, login_user, logout_user, login_required, current_user
 
-cors = flask_cors.CORS()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'top secret'
+app.config['CORS_HEADERS'] = 'Content-Type' 
 
+cors = CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 login_manager = LoginManager(app)
 login_manager.login_view = 'api_login'
-cors = flask_cors.CORS()
-
-cors.init_app(app)
 login_manager.init_app(app)
+
 grid_fs = gridfs.GridFS(Database.db)
 
 
@@ -27,12 +26,12 @@ grid_fs = gridfs.GridFS(Database.db)
 @app.route('/api/register', methods = ['POST'])
 def register():
     if request.method == 'POST':
-        req = request.form.to_dict()
-        name = req.get('name', None)
-        email = req.get('email', None)
-        password = req.get('password', None)
-        roll = req.get('roll', None)
-        batch = req.get('batch', None)
+        req = request.headers
+        name = req.get('Name', None)
+        email = req.get('Email', None)
+        password = req.get('Password', None)
+        roll = req.get('Roll', None)
+        batch = req.get('Batch', None)
 
         # Check for existing user
         find_user = User.get_by_email(email)
@@ -58,6 +57,8 @@ def register():
 # Login, Return request['next'] if it exists
 @app.route('/api/login', methods=['POST', 'GET'])
 def api_login():
+    if current_user.is_authenticated:
+        return jsonify(status = "Already logged in")
     if request.method == 'POST':
         req = request.form.to_dict()
         email = req.get('email', None)
@@ -77,10 +78,6 @@ def api_login():
             flash('Incorrect Password')
             return jsonify(status="Password Incorrect"), 400
         login_user(user)
-        if user.is_authenticated:
-            print("already logged in")
-        else:
-            print("new login")
         return jsonify(status="Logged in successfully"), 200
             
 
@@ -118,6 +115,10 @@ def get_batch21(batch):
 @app.route('/test') 
 def test():
     return jsonify(response = "api call successful"), 200
+
+@app.route('/api/checklogin')
+def check_login():
+    return str(current_user.is_authenticated)
 
 @login_manager.unauthorized_handler
 def unauth():
