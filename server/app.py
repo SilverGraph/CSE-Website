@@ -7,7 +7,7 @@ from bson.objectid import ObjectId
 from flask.wrappers import Response
 from flask import Flask, request, jsonify, flash, Response
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager, login_manager, login_user, logout_user, login_required, current_user
+from flask_login import LoginManager, login_manager, login_user, logout_user, login_required
 
 cors = flask_cors.CORS()
 
@@ -32,6 +32,7 @@ def register():
         email = req.get('email', None)
         password = req.get('password', None)
         roll = req.get('roll', None)
+        batch = req.get('batch', None)
 
         # Check for existing user
         find_user = User.get_by_email(email)
@@ -44,17 +45,18 @@ def register():
         file = request.files['image']
         id = grid_fs.put(file, content_type = file.content_type, filename = email)
         
-        new_user = User(name, email, pwd_hash, roll, _id = id)
+        new_user = User(name, email, pwd_hash, roll, _id = id, batch = batch)
 
         # Save user to database
         if new_user:
             new_user.document['photo_url'] = 'localhost:5000/getimage/{}'.format(str(id))
             new_user.save_to_mongo(new_user.document)
+            login_user(new_user)
             return jsonify(status="User registered successfully", id = str(new_user._id)), 200
         
 
 # Login, Return request['next'] if it exists
-@app.route('/api/login', methods=['POST'])
+@app.route('/api/login', methods=['POST', 'GET'])
 def api_login():
     if request.method == 'POST':
         req = request.form.to_dict()
@@ -75,13 +77,17 @@ def api_login():
             flash('Incorrect Password')
             return jsonify(status="Password Incorrect"), 400
         login_user(user)
-
+        if user.is_authenticated:
+            print("already logged in")
+        else:
+            print("new login")
         return jsonify(status="Logged in successfully"), 200
+            
 
 @app.route('/getimage/<id>')
 def getimage(id):
     item = Database.col.find_one({'_id': ObjectId(id)})
-    # print(item)
+    # print(item) 
     file = grid_fs.get(ObjectId(item['_id']))
     
     return Response(file.read(), mimetype=file.content_type)
@@ -94,9 +100,10 @@ def logout():
     logout_user()
     return jsonify(status="Logged out successfully"), 200
 
-@app.route('/students/2021')
-def get_batch21():
-    cursor = Database.col.find()
+@app.route('/students/<batch>')
+@login_required
+def get_batch21(batch):
+    cursor = Database.col.find({'batch': batch})
     l={}
     for item in cursor:
         roll_id = item['roll']
@@ -106,7 +113,7 @@ def get_batch21():
         l[roll_id]['date'] = item['date_created']
         l[roll_id]['photo_url'] = item['photo_url']
 
-    return jsonify(batch_21=l), 200
+    return jsonify(students=l), 200
 
 @app.route('/test') 
 def test():
