@@ -26,13 +26,13 @@ grid_fs = gridfs.GridFS(Database.db)
 @app.route('/api/register', methods = ['POST'])
 def register():
     if request.method == 'POST':
-        req = request.headers
-        name = req.get('Name', None)
-        email = req.get('Email', None)
-        password = req.get('Password', None)
-        roll = req.get('Roll', None)
-        batch = req.get('Batch', None)
-
+        req = request.form.to_dict()
+        name = req.get('name', None)
+        email = req.get('email', None)
+        password = req.get('password', None)
+        roll = req.get('roll', None)
+        batch = req.get('batch', None)
+        print(req)
         # Check for existing user
         find_user = User.get_by_email(email)
         if find_user is not None:
@@ -42,6 +42,7 @@ def register():
         pwd_hash = generate_password_hash(password, method="pbkdf2:sha256", salt_length=16)
         
         file = request.files['image']
+        print(file)
         id = grid_fs.put(file, content_type = file.content_type, filename = email)
         
         new_user = User(name, email, pwd_hash, roll, _id = id, batch = batch)
