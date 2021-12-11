@@ -22,14 +22,15 @@ const darkTheme = createTheme({
   },
 })
 
-const Input = styled('input')({
-  display: 'none',
-});
+// const Input = styled('input')({
+//   // display: 'none',
+// });
 
 export default function Login() {
   const [name, setName] = useState("");
   const [mail, setMail] = useState("");
   const [pass, setPass] = useState("");
+  const [file, setFile] = useState(null);
 
   // useEffect(() => {
   //   async function runAxios() {
@@ -45,35 +46,29 @@ export default function Login() {
   //   runAxios()
   // }, [])
 
+  var formData = new FormData()
+  formData.append('name',name)
+  formData.append('email', mail);   //append the values with key, value pair
+  formData.append('password', pass);
+  formData.append('roll', "123")
+  formData.append('batch',2020)
+  // formData.append('image',file)
+  
   async function handleSubmit() {
-    console.log(mail, name);
+    formData.append('image',file)
     await axios({
-      method: 'POST',
-      url: `http://127.0.0.1:5000/api/register`,
-      headers: {
-        name: "name",
-        email: "mail", 
-        password: "pass",
-        batch: 2020,
-        roll: 48,
-      },
+      method: 'post',
+      url: 'http://127.0.0.1:5000/api/register',
+      data: formData,
+      headers:{"Content-Type": "multipart/form-data"}, 
       withCredentials: true
     }).then((props) => {
         console.log(props)
-    })
-
-    // await axios.post(
-    //   "http://localhost:5000/api/register",
-    //   {
-    //     name: name,
-    //     email: mail,
-    //     password: pass,
-    //     batch: 2020,
-    //     roll: 48,
-    //   }
-    // ).then(res => {
-    //   console.log(res);
-    // })
+    }).catch(function (response) {
+      //handle error
+      console.log(response);
+    });
+      // axios calls and other checks
   }
 
   return (
@@ -134,12 +129,13 @@ export default function Login() {
                   value={pass}
                   onChange={(e)=>setPass(e.target.value)}
                 />
-                <label htmlFor="contained-button-file">
-                  <Input accept="image/*" id="contained-button-file" multiple type="file" />
+                {/* <label htmlFor="contained-button-file">
+                  <Input accept="image/*" id="contained-button-file" type="file" onChange={(e)=> setFile(e.target.files)}/>
                   <Button variant="contained" component="span">
                     Upload
                   </Button>
-                </label>
+                </label> */}
+                <input type="file" onChange={(e) => setFile(e.target.files[0])} />
               </FormControl>
             </CardContent>
             <CardActions
