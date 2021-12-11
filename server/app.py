@@ -26,12 +26,13 @@ grid_fs = gridfs.GridFS(Database.db)
 @app.route('/api/register', methods = ['POST'])
 def register():
     if request.method == 'POST':
-        req = request.form.to_dict()
-        name = req.get('name', None)
-        email = req.get('email', None)
-        password = req.get('password', None)
-        roll = req.get('roll', None)
-        batch = req.get('batch', None)
+        req = request.headers
+        print(req)
+        name = req.get('Name', None)
+        email = req.get('Email', None)
+        password = req.get('Password', None)
+        roll = req.get('Roll', None)
+        batch = req.get('Batch', None)
 
         # Check for existing user
         find_user = User.get_by_email(email)
