@@ -34,6 +34,23 @@ cd into the server folder and run these commands:<br>
 
 ### For starting the server:
 
+**Short-method (from the root folder)**
+```bash
+    #for bash
+    source server_run.sh
+
+    #for pwsh
+    ./server_run.bat
+
+    #for cmd
+    server_run.bat
+```
+
+**Long Method**
+
+- go into the server directory
+```cd server```
+
 - activate the virtual env:
 ```./server/virtual/Scripts/activate```
 

@@ -7,7 +7,7 @@ from bson.objectid import ObjectId
 from flask.wrappers import Response
 from flask import Flask, request, jsonify, flash, Response
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager, login_manager, login_user, logout_user, login_required, current_user
+from flask_login import LoginManager, login_manager, login_user, logout_user, login_required
 
 cors = flask_cors.CORS()
 
@@ -56,7 +56,7 @@ def register():
         
 
 # Login, Return request['next'] if it exists
-@app.route('/api/login', methods=['POST'])
+@app.route('/api/login', methods=['POST', 'GET'])
 def api_login():
     if request.method == 'POST':
         req = request.form.to_dict()
@@ -77,13 +77,17 @@ def api_login():
             flash('Incorrect Password')
             return jsonify(status="Password Incorrect"), 400
         login_user(user)
-
+        if user.is_authenticated:
+            print("already logged in")
+        else:
+            print("new login")
         return jsonify(status="Logged in successfully"), 200
+            
 
 @app.route('/getimage/<id>')
 def getimage(id):
     item = Database.col.find_one({'_id': ObjectId(id)})
-    # print(item)
+    # print(item) 
     file = grid_fs.get(ObjectId(item['_id']))
     
     return Response(file.read(), mimetype=file.content_type)
