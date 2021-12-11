@@ -1,7 +1,11 @@
 import pymongo
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class Database:
-    myclient = pymongo.MongoClient('mongodb+srv://RajAryan:Sgjpn0Tfz0uu1lMj@cluster0.aug5r.mongodb.net/test?retryWrites=true&w=majority')
+    myclient = pymongo.MongoClient('mongodb+srv://RajAryan:'+ os.getenv("DB_PASSWORD") +'@cluster0.aug5r.mongodb.net/test?retryWrites=true&w=majority')
     db = myclient['test']
     col = db['newTest']
 
