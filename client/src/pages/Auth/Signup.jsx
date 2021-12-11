@@ -14,6 +14,7 @@ import {
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { Link} from "react-router-dom"
 import BgStars from "../../components/background/BgStars"
+import axios from 'axios'
 
 const darkTheme = createTheme({
   palette: {
@@ -26,7 +27,19 @@ export default function Login() {
   const [mail, setMail] = useState();
   const [pass, setPass] = useState();
 
-  function handleSubmit() {
+  async function handleSubmit() {
+    await axios
+      .post("http://localhost:5000/api/register",
+        {
+          name: name,
+          email: mail,
+          password: pass,
+          id: "B120046",
+          batch: "2020",
+        })
+      .then((props) => {
+        console.log(props)
+      })
       // axios calls and other checks
   }
 
