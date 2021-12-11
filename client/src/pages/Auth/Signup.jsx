@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   Card,
   CardContent,
@@ -9,12 +9,12 @@ import {
   FormControl,
   TextField,
 } from "@mui/material"
+import axios from "axios"
 // import CloseIcon from "@mui/icons-material/Close";
 // import GoogleIcon from "@mui/icons-material/Google";
-import { createTheme, ThemeProvider } from "@mui/material/styles"
+import { createTheme, ThemeProvider, styled } from "@mui/material/styles"
 import { Link} from "react-router-dom"
 import BgStars from "../../components/background/BgStars"
-import axios from 'axios'
 
 const darkTheme = createTheme({
   palette: {
@@ -22,25 +22,45 @@ const darkTheme = createTheme({
   },
 })
 
+const Input = styled('input')({
+  display: 'none',
+});
+
 export default function Login() {
-  const [name, setName] = useState();
-  const [mail, setMail] = useState();
-  const [pass, setPass] = useState();
+  const [name, setName] = useState("");
+  const [mail, setMail] = useState("");
+  const [pass, setPass] = useState("");
+
+  // useEffect(() => {
+  //   async function runAxios() {
+  //     await axios({
+  //       method: 'post',
+  //       url: `127.0.0.1:5000/api/login`,
+  //       headers: {email: mail, password: pass},
+  //       withCredentials: true
+  //     }).then((props) => {
+  //         console.log(props)
+  //     })
+  //   }
+  //   runAxios()
+  // }, [])
 
   async function handleSubmit() {
-    await axios
-      .post("http://localhost:5000/api/register",
-        {
-          name: name,
-          email: mail,
-          password: pass,
-          id: "B120046",
-          batch: "2020",
-        })
-      .then((props) => {
+    console.log(mail, name);
+    await axios({
+      method: 'POST',
+      url: `http://127.0.0.1:5000/api/register`,
+      headers: {
+        name: "name",
+        email: "mail", 
+        password: "pass",
+        batch: 2020,
+        roll: 48,
+      },
+      withCredentials: true
+    }).then((props) => {
         console.log(props)
-      })
-      // axios calls and other checks
+    })
   }
 
   return (
@@ -80,7 +100,7 @@ export default function Login() {
                   variant="standard"
                   margin="dense"
                   value={name}
-                  onChange={(e)=>setName(e.value)}
+                  onChange={(e)=>setName(e.target.value)}
                 />
                 <TextField
                   id="Email"
@@ -89,7 +109,7 @@ export default function Login() {
                   variant="standard"
                   margin="dense"
                   value={mail}
-                  onChange={(e)=>setMail(e.value)}
+                  onChange={(e)=>setMail(e.target.value)}
                 />
                 <TextField
                   id="Password"
@@ -99,8 +119,14 @@ export default function Login() {
                   variant="standard"
                   margin="dense"
                   value={pass}
-                  onChange={(e)=>setPass(e.value)}
+                  onChange={(e)=>setPass(e.target.value)}
                 />
+                <label htmlFor="contained-button-file">
+                  <Input accept="image/*" id="contained-button-file" multiple type="file" />
+                  <Button variant="contained" component="span">
+                    Upload
+                  </Button>
+                </label>
               </FormControl>
             </CardContent>
             <CardActions
