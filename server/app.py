@@ -1,4 +1,4 @@
-import flask_cors
+from flask_cors import CORS, cross_origin
 import gridfs
 import json
 from models import User
@@ -9,17 +9,16 @@ from flask import Flask, request, jsonify, flash, Response
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_manager, login_user, logout_user, login_required
 
-cors = flask_cors.CORS()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'top secret'
+app.config['CORS_HEADERS'] = 'Content-Type' 
 
+cors = CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 login_manager = LoginManager(app)
 login_manager.login_view = 'api_login'
-cors = flask_cors.CORS()
-
-cors.init_app(app)
 login_manager.init_app(app)
+
 grid_fs = gridfs.GridFS(Database.db)
 
 
@@ -68,6 +67,7 @@ def api_login():
 
         if user is None:
             flash('Incorrect Login Details')
+            print("not a user")
             return jsonify(status="Incorrect login details"), 400
         
         # Check Password, match with hash
@@ -89,7 +89,7 @@ def getimage(id):
     item = Database.col.find_one({'_id': ObjectId(id)})
     # print(item) 
     file = grid_fs.get(ObjectId(item['_id']))
-    
+     
     return Response(file.read(), mimetype=file.content_type)
 
 
