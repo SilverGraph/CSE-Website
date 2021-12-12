@@ -93,31 +93,6 @@ export default function Login() {
       console.log(response);
     });
   }
-  async function handleLogout(){
-    await axios({
-      method: 'get',
-      url: 'http://127.0.0.1:5000/api/logout',
-      // data: formData,
-      // headers:{"Content-Type": "multipart/form-data"}, 
-      withCredentials: true
-    }).then((props) => {
-      console.log(props)
-    }).catch(function (response) {
-      console.log(response);
-    });
-    await axios({
-      method: 'get',
-      url: 'http://127.0.0.1:5000/api/checklogin',
-      // data: formData,
-      // headers:{"Content-Type": "multipart/form-data"}, 
-      withCredentials: true
-    }).then((props) => {
-      console.log(props)
-    }).catch(function (response) {
-      console.log(response);
-    });
-  }
-
 
   return (
     <>
