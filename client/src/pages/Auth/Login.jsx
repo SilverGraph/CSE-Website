@@ -23,8 +23,8 @@ const darkTheme = createTheme({
 })
 
 export default function Login() {
-  const [mail, setMail] = useState();
-  const [pass, setPass] = useState();
+  const [mail, setMail] = useState("");
+  const [pass, setPass] = useState("");
 
   var formData = new FormData()
   formData.append('email', mail);   //append the values with key, value pair
@@ -38,12 +38,46 @@ export default function Login() {
       headers:{"Content-Type": "multipart/form-data"}, 
       withCredentials: true
     }).then((props) => {
-        console.log(props)
+      console.log(props)
+      // localStorage.setItem('userid', props.data.id)
+      // window.location= "/"
     }).catch(function (response) {
       //handle error
       console.log(response);
     });
       // axios calls and other checks
+    
+    await axios.get("http://127.0.0.1:5000/api/checklogin")
+      .then((props) => {
+        console.log(props)
+        // if (props=== "True") {
+        //   window.location= "/"
+        // }
+    })
+  }
+  async function handleLogout(){
+    await axios({
+      method: 'get',
+      url: 'http://127.0.0.1:5000/api/logout',
+      // data: formData,
+      // headers:{"Content-Type": "multipart/form-data"}, 
+      withCredentials: true
+    }).then((props) => {
+      console.log(props)
+    }).catch(function (response) {
+      console.log(response);
+    });
+    await axios({
+      method: 'get',
+      url: 'http://127.0.0.1:5000/api/checklogin',
+      // data: formData,
+      // headers:{"Content-Type": "multipart/form-data"}, 
+      withCredentials: true
+    }).then((props) => {
+      console.log(props)
+    }).catch(function (response) {
+      console.log(response);
+    });
   }
 
   return (
@@ -115,6 +149,18 @@ export default function Login() {
                 // startIcon={<GoogleIcon />}
               >
                 Login
+              </Button>
+              <Button onClick={handleLogout}
+                size="large"
+                variant="outlined"
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                // startIcon={<GoogleIcon />}
+              >
+                Logout
               </Button>
             </CardActions>
             <div sx={{ padding: "0px" }}>

@@ -51,7 +51,7 @@ def register():
         if new_user:
             new_user.document['photo_url'] = 'localhost:5000/getimage/{}'.format(str(id))
             new_user.save_to_mongo(new_user.document)
-            login_user(new_user)
+            login_user(new_user,remember=True)
             return jsonify(status="User registered successfully", id = str(new_user._id)), 200
         
 
@@ -79,7 +79,7 @@ def api_login():
         if pwd_check == False:
             flash('Incorrect Password')
             return jsonify(status="Password Incorrect"), 400
-        login_user(user)
+        login_user(user,remember=True)
         return jsonify(status="Logged in successfully"), 200
             
 
@@ -120,8 +120,10 @@ def test():
 
 @app.route('/api/checklogin')
 def check_login():
-    return str(current_user.is_authenticated)
-
+    if current_user.is_authenticated:
+        return jsonify(status="True")
+    return jsonify(status="False")
+    
 @login_manager.unauthorized_handler
 def unauth():
     return jsonify(status="Where you goin"), 400

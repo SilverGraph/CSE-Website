@@ -64,15 +64,16 @@ export default function Login() {
       withCredentials: true
     }).then((props) => {
         console.log(props)
-<<<<<<< HEAD
-    })
-=======
+      // localStorage.setItem('userid', props.data.id)
+      // window.location= "/"
     }).catch(function (response) {
-      //handle error
       console.log(response);
     });
-      // axios calls and other checks
->>>>>>> b93296a4bde318d9d8f7d748419890672c252b73
+    
+    await axios.get("http://127.0.0.1:5000/api/checklogin")
+      .then((props) => {
+      console.log(props);
+    })
   }
 
   return (
