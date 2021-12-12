@@ -22,7 +22,7 @@ login_manager.init_app(app)
 grid_fs = gridfs.GridFS(Database.db)
 
 
-# Register new user, Return request['next'] if it exists
+# Register new user
 @app.route('/api/register', methods = ['POST'])
 def register():
     if request.method == 'POST':
@@ -31,8 +31,7 @@ def register():
         email = req.get('email', None)
         password = req.get('password', None)
         roll = req.get('roll', None)
-        batch = req.get('batch', None)
-        print(req)
+        batch = req.get('batch', None) 
         # Check for existing user
         find_user = User.get_by_email(email)
         if find_user is not None:
@@ -59,7 +58,6 @@ def register():
 @app.route('/api/login', methods=['POST', 'GET'])
 def api_login():
     if current_user.is_authenticated:
-        print(current_user.email)
         return jsonify(status = "Already logged in")
     if request.method == 'POST':
         req = request.form.to_dict()
@@ -117,7 +115,6 @@ def get_batch21(batch):
 
 @app.route('/api/checklogin')
 def check_login():
-    # Add Auth logic
     if current_user.is_authenticated:
         return jsonify({'Status': True})
     else:
