@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap');
+
+.cards {
+    border-radius: 8px;
+    height: 400px;
+    width: 260px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(2rem);
+}
+
+.card-blur {
+    position: absolute;
+    height: 100%;
+    width: calc(100% + 1px);
+    background-color: black;
+    opacity: 0;
+    transition: opacity 0.15s ease-in;
+}
+
+.cards:hover .card-blur {
+    opacity: 0.6;
+}
+
+.footer {
+    z-index: 1;
+    position: absolute;
+    height: 80px;
+    width: 100%;
+    bottom: 0;
+}
+
+svg.curve {
+    position: absolute;
+    fill: white;
+    width: 260px;
+    height: 450px;
+}
+
+.connections {
+    height: 80px;
+    width: 280px;
+    position: absolute;
+    bottom: 100px;
+    margin: auto;
+}
+
+.connection {
+    height: 25px;
+    width: 25px;
+    border-radius: 100%;
+    background-color: white;
+    display: inline-block;
+    padding: 5px;
+    margin-right: 15px;
+    transform: translateY(200px);
+    transition: transform 1s cubic-bezier(.46, 1.48, .18, .81);
+}
+
+.cards:hover .connection {
+    transform: translateY(0px);
+}
+
+.info {
+	font-family: Roboto;
+    transform: translateY(250px);
+    background-color: aliceblue;
+    width:260px;
+    min-height:125px;
+    transition: transform 1s cubic-bezier(.31,1.21,.64,1.02);
+}
+
+.cards:hover .info {
+    transform: translateY(-50px);
+}
+
+.name {
+    font-weight: bolder;
+    font-size: 18px;
+    padding-top: 5px;
+    color:black;
+}
+
+.bio {
+    margin-top: 5px;
+    color:black;
+}
+a{
+    text-decoration: none;
+    text-align: center;
+}
+.connection{
+    height:38px;
+    width:38px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.connections{
+    padding-left: 10px;
+    display:flex;
+    flex-direction: row;
+}
+.connection.linkedin {
+    transition-delay: 0.06s;
+}
+
+.connection.github {
+    transition-delay: 0.12s;
+}
+
+@media screen and (max-width: 480px) {
+   .cards{
+    height: 380px;
+    width: 260px;
+    margin-right: 20px;
+    margin-left: 0px;
+    margin-bottom: 20px;
+   } 
+   info{
+    width:250px; 
+   }
+}
+

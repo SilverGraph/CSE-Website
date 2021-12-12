@@ -1,6 +1,7 @@
 # CSE-Website
 A website for CSE freshers
 
+## For client:
 
 ``` cd client/ ```
 
@@ -9,7 +10,7 @@ A website for CSE freshers
 ``` npm start``` to start the development server
 
 
-For server:
+## For server:
 
 - navigate to the server folder
 ```cd server```
@@ -21,17 +22,34 @@ For server:
 ```python -m venv ./virtual```
 
 - this creates a folder named 'virtual' which stores the necessary scripts, then run this command:
-```./virtual/Scripts/activate```
+```./virtual/Scripts/activate``` or ```source virtual/Scripts/activate``` (for bash and replace the 'Scripts' with 'bin' for Linux)
 
 
-## For installing modules:
+### For installing modules:
 
-cd into the server folder and run this command:
+cd into the server folder and run these commands:<br>
 ```cd server```
 
 ```pip install -r "requirements.txt"```
 
-## For starting the server:
+### For starting the server:
+
+**Short-method (from the root folder)**
+```bash
+    #for bash
+    source server_run.sh
+
+    #for pwsh
+    ./server_run.bat
+
+    #for cmd
+    server_run.bat
+```
+
+**Long Method**
+
+- go into the server directory
+```cd server```
 
 - activate the virtual env:
 ```./server/virtual/Scripts/activate```
