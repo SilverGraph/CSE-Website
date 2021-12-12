@@ -47,13 +47,27 @@ export default function Login() {
     });
       // axios calls and other checks
     
-    await axios.get("http://127.0.0.1:5000/api/checklogin")
-      .then((props) => {
-        console.log(props)
-        // if (props=== "True") {
-        //   window.location= "/"
-        // }
-    })
+    // await axios.get("http://127.0.0.1:5000/api/checklogin")
+    //   .then((props) => {
+    //     console.log(props)
+    //     // if (props=== "True") {
+    //     //   window.location= "/"
+    //     // }
+    // })
+    await axios({
+      method: 'get',
+      url: 'http://127.0.0.1:5000/api/checklogin',
+      // data: formData,
+      // headers:{"Content-Type": "LOL"}, 
+      withCredentials: true
+    }).then((props) => {
+      console.log(props)
+      // localStorage.setItem('userid', props.data.id)
+      // window.location= "/"
+    }).catch(function (response) {
+      //handle error
+      console.log(response);
+    });
   }
   async function handleLogout(){
     await axios({
@@ -79,6 +93,31 @@ export default function Login() {
       console.log(response);
     });
   }
+  async function handleLogout(){
+    await axios({
+      method: 'get',
+      url: 'http://127.0.0.1:5000/api/logout',
+      // data: formData,
+      // headers:{"Content-Type": "multipart/form-data"}, 
+      withCredentials: true
+    }).then((props) => {
+      console.log(props)
+    }).catch(function (response) {
+      console.log(response);
+    });
+    await axios({
+      method: 'get',
+      url: 'http://127.0.0.1:5000/api/checklogin',
+      // data: formData,
+      // headers:{"Content-Type": "multipart/form-data"}, 
+      withCredentials: true
+    }).then((props) => {
+      console.log(props)
+    }).catch(function (response) {
+      console.log(response);
+    });
+  }
+
 
   return (
     <>
