@@ -37,7 +37,10 @@ cd into the server folder and run these commands:<br>
 **Short-method (from the root folder)**
 ```bash
     #for bash
-    source server_run.sh
+    source bash_run.sh
+
+    #for linux
+    source linux_run.sh
 
     #for pwsh
     ./server_run.bat
