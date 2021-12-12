@@ -126,9 +126,9 @@ export default function Login() {
 
               <FormControl variant="standard">
                 <TextField
-                  id="Email"
-                  label="Email"
-                  helperText="Your registered institute email"
+                  id="id"
+                  label="Institute ID"
+                  helperText="Your institute ID"
                   variant="standard"
                   margin="dense"
                   value={mail}
