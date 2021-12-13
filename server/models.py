@@ -7,7 +7,7 @@ from flask_login import UserMixin
 class User(UserMixin):
     """The User model"""
 
-    def __init__(self, name, email, pwd_hash, roll, _id = None, date_created=None, content_type = 'image/jpeg', photo_url = None, batch = None, description = None, social_media = None) -> None:
+    def __init__(self, name, email, pwd_hash, roll, _id = None, date_created=None, photo_url = None, batch = None, description = None, social_media = None) -> None:
         self.name = name
         self.email = email
         self.pwd_hash = pwd_hash 
@@ -19,7 +19,6 @@ class User(UserMixin):
         self.id = _id
         self.description = description
         self.social_media = social_media
-        self.content_type = content_type
 
         # Date Created
         if date_created is None:
@@ -43,7 +42,6 @@ class User(UserMixin):
             'batch': self.batch,
             'description': self.description,
             'social_media': self.social_media,
-            'content_type': self.content_type
         }
 
     @staticmethod
@@ -59,7 +57,6 @@ class User(UserMixin):
     def get_by_email(cls, email):
         data = Database.col.find_one({'email': email})
         if data is not None:
-            # del data['date created']
             return User(**data)
 
     @classmethod
@@ -73,7 +70,3 @@ class User(UserMixin):
             Database.insert(document)
         else:
             Database.insert(self.document)
-
-if __name__ == "__main__":
-    test = User.get_by_email('karish.fafgfgdfke@gmail.com')
-    print(test)
