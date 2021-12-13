@@ -15,6 +15,7 @@ import axios from "axios"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { Link} from "react-router-dom"
 import BgStars from "../../components/background/BgStars"
+import Navbar from "../../components/Navbar";
 
 const darkTheme = createTheme({
   palette: {
@@ -94,9 +95,9 @@ export default function Login() {
     });
   }
 
-
   return (
     <>
+      <Navbar/>
       <BgStars />
       <ThemeProvider theme={darkTheme}>
         <div

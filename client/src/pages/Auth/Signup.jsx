@@ -15,6 +15,7 @@ import axios from "axios"
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles"
 import { Link} from "react-router-dom"
 import BgStars from "../../components/background/BgStars"
+import Navbar from "../../components/Navbar";
 
 const darkTheme = createTheme({
   palette: {
@@ -63,14 +64,12 @@ export default function Login() {
       headers:{"Content-Type": "multipart/form-data"}, 
       withCredentials: true
     }).then((props) => {
-      console.log(props)
+        console.log(props)
       // localStorage.setItem('userid', props.data.id)
       // window.location= "/"
     }).catch(function (response) {
-      //handle error
       console.log(response);
     });
-      // axios calls and other checks
     
     await axios.get("http://127.0.0.1:5000/api/checklogin")
       .then((props) => {
@@ -80,6 +79,7 @@ export default function Login() {
 
   return (
     <>
+     <Navbar/>
       <BgStars />
       <ThemeProvider theme={darkTheme}>
         <div
