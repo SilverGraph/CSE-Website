@@ -1,10 +1,42 @@
 .container-slide-3 {
     align-items: center;
     background-color: transparent;
-    border: 1px solid #fff;
+    /* border: 1px solid #fff; */
     color: #fff;
     display: flex;
     height: 100vh;
     justify-content: center;
-    margin: 50px;
+    /* margin: 50px; */
+}
+
+#myVideo {
+    position: fixed;
+    width: 100%;
+    /* height: 100vh; */
+    z-index: -1;
+}
+
+svg {
+	font-family: 'Noto', sans-serif;
+    position: absolute; 
+    width: 100%; height: 100%;
+}
+svg text {
+    text-transform: uppercase;
+    animation: stroke 5s infinite alternate;
+    stroke-width: 2;
+    stroke: #000;
+    font-size: 140px;
+}
+@keyframes stroke {
+    0%   {
+        fill: rgba(72,138,20,0); stroke: rgba(54,95,160,1);
+        stroke-dashoffset: 25%; stroke-dasharray: 0 50%; stroke-width: 2;
+    }
+    70%  {fill: rgba(72,138,20,0); stroke: rgba(54,95,160,1); }
+    80%  {fill: rgba(72,138,20,0); stroke: rgba(54,95,160,1); stroke-width: 3; }
+    100% {
+        fill: rgba(72,138,204,1); stroke: rgba(54,95,160,0); 
+        stroke-dashoffset: -25%; stroke-dasharray: 50% 0; stroke-width: 0;
+    }
 }
