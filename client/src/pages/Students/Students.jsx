@@ -4,6 +4,7 @@ import "./Students.css";
 import {senos}from "./senior";
 import {junos} from "./junior";
 import BgStars from "../../components/background/BgStars";
+import Navbar from "../../components/Navbar";
 
 
 export default function Students() {
@@ -43,6 +44,7 @@ export default function Students() {
   return (
     <>
     <BgStars />
+    <Navbar/>
     <div style={{zIndex: '1'}} className="studentHome mt-3">
       <center>
         <div className="student">

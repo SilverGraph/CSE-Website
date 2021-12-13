@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React, { useEffect, useState } from "react"
 import {
   Card,
@@ -12,9 +13,10 @@ import {
 import axios from "axios"
 // import CloseIcon from "@mui/icons-material/Close";
 // import GoogleIcon from "@mui/icons-material/Google";
-import { createTheme, ThemeProvider, styled } from "@mui/material/styles"
+import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { Link} from "react-router-dom"
 import BgStars from "../../components/background/BgStars"
+import Navbar from "../../components/Navbar";
 
 const darkTheme = createTheme({
   palette: {
@@ -78,6 +80,7 @@ export default function Login() {
 
   return (
     <>
+     <Navbar/>
       <BgStars />
       <ThemeProvider theme={darkTheme}>
         <div
