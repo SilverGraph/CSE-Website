@@ -1,13 +1,13 @@
 from datetime import datetime
-from pymongo.common import validate
 from werkzeug.security import check_password_hash
 from database import Database
 from bson.objectid import ObjectId
+from flask_login import UserMixin
 
-class User:
+class User(UserMixin):
     """The User model"""
 
-    def __init__(self, name, email, pwd_hash, roll, _id = None, date_created=None, content_type = 'image/jpeg', photo_url = None, batch = None) -> None:
+    def __init__(self, name, email, pwd_hash, roll, _id = None, date_created=None, content_type = 'image/jpeg', photo_url = None, batch = None, description = None, social_media = None) -> None:
         self.name = name
         self.email = email
         self.pwd_hash = pwd_hash 
@@ -15,8 +15,11 @@ class User:
         if photo_url:
             self.photo_url = photo_url
         self._id = str(_id)
-        self.content_type = content_type
         self.batch = batch
+        self.id = _id
+        self.description = description
+        self.social_media = social_media
+        self.content_type = content_type
 
         # Date Created
         if date_created is None:
@@ -28,15 +31,6 @@ class User:
 
         self.generate_document()
 
-    def is_authenticated(self):
-        return True
-    def is_active(self):
-        return True
-    def is_anonymous(self):
-        return False
-    def get_id(self):
-        return self._id
-
     def generate_document(self):
         # Use this in collection.insert_one()
         self.document = {
@@ -46,8 +40,10 @@ class User:
             'email': self.email, 
             'pwd_hash': self.pwd_hash, 
             'date_created': self.date_created, 
-            'content_type': self.content_type,
-            'batch': self.batch
+            'batch': self.batch,
+            'description': self.description,
+            'social_media': self.social_media,
+            'content_type': self.content_type
         }
 
     @staticmethod
