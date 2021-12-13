@@ -20,7 +20,6 @@ app.config['SESSION_COOKIE_DOMAIN'] = False
 app.config['Access-Control-Allow-Credentials'] = True
 app.config.update(SESSION_COOKIE_SAMESITE="None", SESSION_COOKIE_SECURE=True)
 
-
 cors = CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 login_manager = LoginManager(app)
 login_manager.login_view = 'api_login'
@@ -44,9 +43,9 @@ def register():
         valid_roll = True
 
         # Check for valid roll number
-        if((batch != '2020') or (batch != '2021')):
+        if((batch != '2020') and (batch != '2021')):
             valid_roll = False
-        elif(len(roll) > 6):
+        elif(len(roll) != 7):
             valid_roll = False
         elif(roll[0:2] != 'b1'):
             valid_roll = False
@@ -62,7 +61,6 @@ def register():
         pwd_hash = generate_password_hash(password, method="pbkdf2:sha256", salt_length=16)
         
         file = request.files['image']
-        print(file)
         id = grid_fs.put(file, content_type = file.content_type, filename = email)
         
         new_user = User(name, email, pwd_hash, roll, _id = id, batch = batch, description=description, social_media=social_media)

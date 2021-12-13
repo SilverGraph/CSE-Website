@@ -28,7 +28,7 @@ export default function Login() {
   const [pass, setPass] = useState("");
 
   var formData = new FormData()
-  formData.append('email', mail);   //append the values with key, value pair
+  formData.append('roll', mail);   //append the values with key, value pair
   formData.append('password', pass);
   
   async function handleSubmit() {
@@ -127,9 +127,9 @@ export default function Login() {
 
               <FormControl variant="standard">
                 <TextField
-                  id="Email"
-                  label="Email"
-                  helperText="Your registered institute email"
+                  id="id"
+                  label="Institute ID"
+                  helperText="Your institute ID"
                   variant="standard"
                   margin="dense"
                   value={mail}

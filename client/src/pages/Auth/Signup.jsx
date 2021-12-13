@@ -13,10 +13,11 @@ import {
 import axios from "axios"
 // import CloseIcon from "@mui/icons-material/Close";
 // import GoogleIcon from "@mui/icons-material/Google";
-import { createTheme, ThemeProvider } from "@mui/material/styles"
-import { Link} from "react-router-dom"
+import { createTheme, ThemeProvider, styled } from "@mui/material/styles"
+import { Link } from "react-router-dom"
 import BgStars from "../../components/background/BgStars"
 import Navbar from "../../components/Navbar";
+import "./Signup.css"
 
 const darkTheme = createTheme({
   palette: {
@@ -29,10 +30,12 @@ const darkTheme = createTheme({
 // });
 
 export default function Login() {
-  const [name, setName] = useState("");
-  const [mail, setMail] = useState("");
-  const [pass, setPass] = useState("");
-  const [file, setFile] = useState(null);
+  const [name, setName] = useState("")
+  const [mail, setMail] = useState("")
+  const [pass, setPass] = useState("")
+  const [about, setAbout] = useState("")
+  const [file, setFile] = useState(null)
+  const [social, setSocial] = useState({ Instagram: "", Github: "", Linkedin: "" })
 
   // useEffect(() => {
   //   async function runAxios() {
@@ -49,33 +52,42 @@ export default function Login() {
   // }, [])
 
   var formData = new FormData()
-  formData.append('name',name)
-  formData.append('email', mail);   //append the values with key, value pair
-  formData.append('password', pass);
-  formData.append('roll', "123")
-  formData.append('batch',2020)
+  formData.append("name", name)
+  formData.append("roll", mail) //append the values with key, value pair
+  formData.append("password", pass)
+  formData.append("description", about)
+  formData.append("social_media", social)
   // formData.append('image',file)
-  
+
   async function handleSubmit() {
-    formData.append('image',file)
-    await axios({
-      method: 'post',
-      url: 'http://127.0.0.1:5000/api/register',
-      data: formData,
-      headers:{"Content-Type": "multipart/form-data"}, 
-      withCredentials: true
-    }).then((props) => {
+    formData.append("image", file)
+
+    if (name === "" || mail === "" || pass === "" || about === "" || file === null) {
+      alert("Please fill all fields")
+    }
+    else {
+      await axios({
+        method: "post",
+        url: "http://127.0.0.1:5000/api/register",
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true,
+      })
+        .then((props) => {
+          console.log(props)
+          // localStorage.setItem('userid', props.data.id)
+          // window.location= "/"
+        })
+        .catch(function (response) {
+          //handle error
+          console.log(response)
+        })
+      // axios calls and other checks
+
+      await axios.get("http://127.0.0.1:5000/api/checklogin").then((props) => {
         console.log(props)
-      // localStorage.setItem('userid', props.data.id)
-      // window.location= "/"
-    }).catch(function (response) {
-      console.log(response);
-    });
-    
-    await axios.get("http://127.0.0.1:5000/api/checklogin")
-      .then((props) => {
-      console.log(props);
-    })
+      })
+    }
   }
 
   return (
@@ -90,7 +102,7 @@ export default function Login() {
             alignItems: "center",
             height: "auto",
             minHeight: "90vh",
-            padding: "20vh 50px",
+            padding: "10vh 40px",
           }}
         >
           <Card
@@ -98,7 +110,7 @@ export default function Login() {
               minWidth: 270,
               maxWidth: 800,
               textAlign: "center",
-              padding: "20px 90px",
+              padding: "20px 5vh",
             }}
           >
             <CardContent>
@@ -108,7 +120,7 @@ export default function Login() {
               <Divider className="divider" sx={{ mb: 2 }} />
               <Typography variant="body2">New user? Register...</Typography>
 
-              <FormControl variant="standard">
+              <FormControl variant="standard" margin="dense" fullWidth="true">
                 <TextField
                   id="Name"
                   label="Name"
@@ -116,35 +128,95 @@ export default function Login() {
                   variant="standard"
                   margin="dense"
                   value={name}
-                  onChange={(e)=>setName(e.target.value)}
+                  onChange={(e) => setName(e.target.value)}
+                  required
                 />
                 <TextField
-                  id="Email"
-                  label="Email"
-                  helperText="Your institute email"
+                  id="Id"
+                  label="Institute ID"
+                  helperText="Your institute ID"
                   variant="standard"
                   margin="dense"
                   value={mail}
-                  onChange={(e)=>setMail(e.target.value)}
+                  onChange={(e) => setMail(e.target.value)}
+                  required
                 />
                 <TextField
                   id="Password"
-                  label="Password"
+                  label="New Password"
                   type="password"
                   helperText="Give a coded password"
                   variant="standard"
                   margin="dense"
                   value={pass}
-                  onChange={(e)=>setPass(e.target.value)}
+                  onChange={(e) => setPass(e.target.value)}
+                  required
                 />
-                {/* <label htmlFor="contained-button-file">
-                  <Input accept="image/*" id="contained-button-file" type="file" onChange={(e)=> setFile(e.target.files)}/>
-                  <Button variant="contained" component="span">
-                    Upload
-                  </Button>
-                </label> */}
-                <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+                <TextField
+                  id="standard-textarea"
+                  label="About"
+                  placeholder="Something about you in atmost 3 lines"
+                  multiline
+                  value={about}
+                  margin="dense"
+                  variant="standard"
+                  onChange={(e) => setAbout(e.target.value)}
+                  required
+                />
               </FormControl>
+              <FormControl variant="standard" margin="dense" fullWidth="true">
+                <TextField
+                  id="Insta"
+                  label="Instagram"
+                  type="link"
+                  helperText="Your Instagram profile link"
+                  variant="standard"
+                  value={social.insta}
+                  margin="dense"
+                  onChange={(e) =>
+                    setSocial({ ...social, Instagram: e.target.value })
+                  }
+                />
+                <TextField
+                  id="Github"
+                  label="Github"
+                  helperText="Your github profile link"
+                  variant="standard"
+                  margin="dense"
+                  value={social.github}
+                  onChange={(e) =>
+                    setSocial({ ...social, Github: e.target.value })
+                  }
+                />
+                <TextField
+                  id="Linkedin"
+                  label="Linkedin"
+                  margin="dense"
+                  helperText="Your linkedin profile link"
+                  variant="standard"
+                  value={social.linkedin}
+                  onChange={(e) =>
+                    setSocial({ ...social, Linkedin: e.target.value })
+                  }
+                />
+                <label
+                htmlFor="imageinput"
+                style={{ marginTop: "15px" }}
+                className="custom-file-upload"
+              >
+                <input
+                  id="imageinput"
+                  type="file"
+                  onChange={(e) => setFile(e.target.files[0])}
+                />
+                <Button variant="text" component="span">
+                  <Typography variant="body2" color="text.secondary">
+                    Click to upload image
+                  </Typography>
+                </Button>
+              </label>
+              </FormControl>
+              
             </CardContent>
             <CardActions
               sx={{
@@ -153,7 +225,8 @@ export default function Login() {
                 alignItems: "center",
               }}
             >
-              <Button onClick={handleSubmit}
+              <Button
+                onClick={handleSubmit}
                 size="large"
                 variant="outlined"
                 sx={{

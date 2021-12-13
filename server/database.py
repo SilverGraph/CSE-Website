@@ -6,8 +6,8 @@ load_dotenv()
 
 class Database:
     myclient = pymongo.MongoClient('mongodb+srv://RajAryan:'+ os.getenv("DB_PASSWORD") +'@cluster0.aug5r.mongodb.net/test?retryWrites=true&w=majority')
-    db = myclient['test']
-    col = db['newTest']
+    db = myclient['students']
+    col = db['users']
 
     @classmethod
     def insert(cls, document):
@@ -24,5 +24,3 @@ class Database:
         cls.col.update_one({'email': email}, {"$set": {'email': new_email, 'pwd_hash': new_pwd_hash}})
 
 
-if __name__=='__main__':
-    Database.delete('DaddyCool')
