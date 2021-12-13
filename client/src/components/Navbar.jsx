@@ -2,11 +2,29 @@ import React , {useState} from 'react';
 import { FaBars , FaTimes } from 'react-icons/fa';
 import {IconContext} from "react-icons";
 import { NavLink } from 'react-router-dom';
+import { Button } from '@mui/material';
 import './Navbar.css';
+import axios from "axios"
 
 function Navbar(props) {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
+
+  async function handleLogout(){
+    await axios({
+      method: 'get',
+      url: 'http://127.0.0.1:5000/api/logout',
+      // data: formData,
+      // headers:{"Content-Type": "multipart/form-data"}, 
+      withCredentials: true
+    }).then((props) => {
+      console.log(props)
+      window.reload()
+    }).catch(function (response) {
+      console.log(response);
+    });
+  }
+
    return (
     <>
     
@@ -34,14 +52,11 @@ function Navbar(props) {
         
          
       </div>
-      <div className="Buttons">
-        {
-          props.isAuth ?
-            <a href="/students" className='btn btn-outline-light'> Students</a> 
-            : <a href="/Login" className='btn btn-outline-light'> Login</a>
-          }
-      {/* <a href="#" className='btn btn-outline-light'> Logout</a> */}
-      </div>
+      
+      {props.isAuth ? 
+        <Button onClick={handleLogout}>Logout</Button> :
+        <Button onClick={() => window.location="/login"}>Login</Button>
+      }
       
     </div>
   </div>
