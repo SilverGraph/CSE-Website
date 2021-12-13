@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Button } from "@mui/material"
 import Card from "./Card"
 import "./Students.css"
@@ -6,10 +6,36 @@ import { senos } from "./senior"
 import { junos } from "./junior"
 import BgStars from "../../components/background/BgStars"
 import Navbar from "../../components/Navbar";
+import axios from "axios"
+import { useHistory } from "react-router-dom"
 
 export default function Students() {
   const [senior, setSenior] = useState(false)
   const [batch, getDetail] = useState(junos)
+  const [auth, setAuth] = useState(false)
+
+  const history = useHistory()
+
+  useEffect(() => {
+    async function checkAuth() {
+      await axios({
+          method: 'get',
+          url: 'http://127.0.0.1:5000/api/checklogin',
+          // data: formData,
+          // headers:{"Content-Type": "LOL"}, 
+          withCredentials: true
+      }).then((props) => {
+          console.log(props.data.Status)
+          setAuth(props.data.Status)
+          // localStorage.setItem('userid', props.data.id)
+          // window.location= "/"
+      }).catch(function (response) {
+          //handle error
+          console.log(response);
+      });
+    }
+    checkAuth()
+  }, [auth])
 
   const displayUsers = batch.map((user, index) => {
     return <Card key={index} index={index} user={user} />
@@ -35,10 +61,17 @@ export default function Students() {
       </>
     )
   }
+
+  function returnHome() {
+    history.push("/login")
+    return null
+  }
+  
   return (
+    !auth ? returnHome() :
     <>
       <BgStars />
-      <Navbar/>
+      <Navbar isAuth={auth}/>
       <div style={{ zIndex: "1" }} className="studentHome mt-3">
         <center>
           <div className="student">. KNOW . CONNECT . GROW .</div>

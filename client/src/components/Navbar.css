@@ -38,6 +38,9 @@ li{
 }
 
 @media screen and (max-width: 993px) {
+    .container-fluid {
+        height: 50px;
+    }
     .Container{
         display:flex;
         flex-direction: column;

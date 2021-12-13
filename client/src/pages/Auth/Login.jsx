@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
   Card,
   CardContent,
@@ -13,7 +13,7 @@ import axios from "axios"
 // import CloseIcon from "@mui/icons-material/Close";
 // import GoogleIcon from "@mui/icons-material/Google";
 import { createTheme, ThemeProvider } from "@mui/material/styles"
-import { Link} from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import BgStars from "../../components/background/BgStars"
 import Navbar from "../../components/Navbar";
 
@@ -26,6 +26,29 @@ const darkTheme = createTheme({
 export default function Login() {
   const [mail, setMail] = useState("");
   const [pass, setPass] = useState("");
+  const [auth, setAuth] = useState(false)
+  const history = useHistory()
+
+  useEffect(() => {
+    async function checkAuth() {
+      await axios({
+          method: 'get',
+          url: 'http://127.0.0.1:5000/api/checklogin',
+          // data: formData,
+          // headers:{"Content-Type": "LOL"}, 
+          withCredentials: true
+      }).then((props) => {
+          console.log(props.data.Status)
+          setAuth(props.data.Status)
+          // localStorage.setItem('userid', props.data.id)
+          // window.location= "/"
+      }).catch(function (response) {
+          //handle error
+          console.log(response);
+      });
+    }
+    checkAuth()
+  }, [auth])
 
   var formData = new FormData()
   formData.append('roll', mail);   //append the values with key, value pair
@@ -46,15 +69,7 @@ export default function Login() {
       //handle error
       console.log(response);
     });
-      // axios calls and other checks
-    
-    // await axios.get("http://127.0.0.1:5000/api/checklogin")
-    //   .then((props) => {
-    //     console.log(props)
-    //     // if (props=== "True") {
-    //     //   window.location= "/"
-    //     // }
-    // })
+
     await axios({
       method: 'get',
       url: 'http://127.0.0.1:5000/api/checklogin',
@@ -63,8 +78,8 @@ export default function Login() {
       withCredentials: true
     }).then((props) => {
       console.log(props)
-      // localStorage.setItem('userid', props.data.id)
-      // window.location= "/"
+      setAuth(props.data.Status)
+      history.push("/")
     }).catch(function (response) {
       //handle error
       console.log(response);
@@ -96,6 +111,7 @@ export default function Login() {
   }
 
   return (
+    auth ? window.location = "/" :
     <>
       <Navbar/>
       <BgStars />
