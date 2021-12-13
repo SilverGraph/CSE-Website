@@ -20,7 +20,6 @@ app.config['SESSION_COOKIE_DOMAIN'] = False
 app.config['Access-Control-Allow-Credentials'] = True
 app.config.update(SESSION_COOKIE_SAMESITE="None", SESSION_COOKIE_SECURE=True)
 
-
 cors = CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 login_manager = LoginManager(app)
 login_manager.login_view = 'api_login'
