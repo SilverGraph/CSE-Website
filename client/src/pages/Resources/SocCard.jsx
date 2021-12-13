@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Resources.css";
 import psoc from "./logos/psoc.png";
 import paracosm from "./logos/paracosm.png";
@@ -14,6 +14,7 @@ import { Container } from "react-bootstrap";
 import Card1 from "./Card1";
 import Card2 from "./Card2";
 import BgStars from "../../components/background/BgStars";
+import Navbar from "../../components/Navbar";
 export default function SocCard() {
   const cardsArray = [
     {
@@ -69,11 +70,12 @@ export default function SocCard() {
   ];
   return (
       <>
+      <Navbar/>
       <BgStars />
         <div className="societies">
         <Container>
             {cardsArray.map((element) => (
-            <div className="rows">
+            <div className="rows" key={element.title1}>
                 <Card1
                 title={element.title1}
                 content={element.content1}
