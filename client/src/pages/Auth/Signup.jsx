@@ -56,7 +56,7 @@ export default function Login() {
   formData.append("roll", mail) //append the values with key, value pair
   formData.append("password", pass)
   formData.append("description", about)
-  formData.append("social_media", social)
+  formData.append("social_media", JSON.stringify(social))
   // formData.append('image',file)
 
   async function handleSubmit() {
@@ -78,9 +78,10 @@ export default function Login() {
           // localStorage.setItem('userid', props.data.id)
           // window.location= "/"
         })
-        .catch(function (response) {
+        .catch(function (error) {
           //handle error
-          console.log(response)
+          // console.log(error.response.data)
+          error.response.data.status === "User already exists" && alert('User already exists')
         })
       // axios calls and other checks
 

@@ -4,7 +4,7 @@ import {IconContext} from "react-icons";
 import { NavLink } from 'react-router-dom';
 import './Navbar.css';
 
-function Navbar() {
+function Navbar(props) {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
    return (
@@ -35,7 +35,11 @@ function Navbar() {
          
       </div>
       <div className="Buttons">
-      <a href="/Login" className='btn btn-outline-light'> Login</a>
+        {
+          props.isAuth ?
+            <a href="/students" className='btn btn-outline-light'> Students</a> 
+            : <a href="/Login" className='btn btn-outline-light'> Login</a>
+          }
       {/* <a href="#" className='btn btn-outline-light'> Logout</a> */}
       </div>
       
