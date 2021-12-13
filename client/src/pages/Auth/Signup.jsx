@@ -33,7 +33,7 @@ export default function Login() {
   const [pass, setPass] = useState("")
   const [about, setAbout] = useState("")
   const [file, setFile] = useState(null)
-  const [social, setSocial] = useState({ insta: "", github: "", linkedin: "" })
+  const [social, setSocial] = useState({ Instagram: "", Github: "", Linkedin: "" })
 
   // useEffect(() => {
   //   async function runAxios() {
@@ -51,11 +51,10 @@ export default function Login() {
 
   var formData = new FormData()
   formData.append("name", name)
-  formData.append("email", mail) //append the values with key, value pair
+  formData.append("roll", mail) //append the values with key, value pair
   formData.append("password", pass)
-  formData.append("about", about)
-  formData.append("batch", 2020)
-  formData.append("social", social)
+  formData.append("description", about)
+  formData.append("social_media", social)
   // formData.append('image',file)
 
   async function handleSubmit() {
@@ -153,7 +152,7 @@ export default function Login() {
                 <TextField
                   id="standard-textarea"
                   label="About"
-                  placeholder="Something about you"
+                  placeholder="Something about you in atmost 3 lines"
                   multiline
                   value={about}
                   margin="dense"
@@ -167,12 +166,12 @@ export default function Login() {
                   id="Insta"
                   label="Instagram"
                   type="link"
-                  helperText="Your insta profile link"
+                  helperText="Your Instagram profile link"
                   variant="standard"
                   value={social.insta}
                   margin="dense"
                   onChange={(e) =>
-                    setSocial({ ...social, insta: e.target.value })
+                    setSocial({ ...social, Instagram: e.target.value })
                   }
                 />
                 <TextField
@@ -183,7 +182,7 @@ export default function Login() {
                   margin="dense"
                   value={social.github}
                   onChange={(e) =>
-                    setSocial({ ...social, github: e.target.value })
+                    setSocial({ ...social, Github: e.target.value })
                   }
                 />
                 <TextField
@@ -194,7 +193,7 @@ export default function Login() {
                   variant="standard"
                   value={social.linkedin}
                   onChange={(e) =>
-                    setSocial({ ...social, linkedin: e.target.value })
+                    setSocial({ ...social, Linkedin: e.target.value })
                   }
                 />
                 <label
