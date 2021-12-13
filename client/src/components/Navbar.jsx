@@ -1,21 +1,17 @@
-import React , {useState} from 'react';
-import { FaBars , FaTimes } from 'react-icons/fa';
-import {IconContext} from "react-icons";
+import React  from 'react';
 import { NavLink } from 'react-router-dom';
 import './Navbar.css';
 
 function Navbar() {
-  const [click, setClick] = useState(false);
-  const handleClick = () => setClick(!click);
    return (
     <>
     
     <nav className="navbar navbar-expand-lg navbar-dark nav-Bar">
   <div className="container-fluid">
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <IconContext.Provider value={{color: 'white', size: 30}}>
-    <span onClick={handleClick}>{click ?<FaTimes/>: <FaBars/>  }</span>
-    </IconContext.Provider>
+   
+    <span className="navbar-toggler-icon"></span>
+
     </button>
     <div className="collapse navbar-collapse Container" id="navbarNavAltMarkup">
       <div className="navbar-nav">
