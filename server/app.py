@@ -1,25 +1,24 @@
-import flask_cors
+from flask_cors import CORS, cross_origin
 import gridfs
 import json
 from models import User
 from database import Database
 from bson.objectid import ObjectId
 from flask.wrappers import Response
-from flask import Flask, request, jsonify, flash, Response
+from flask import Flask, request, jsonify, flash, Response, make_response
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager, login_manager, login_user, logout_user, login_required
+from flask_login import LoginManager, login_manager, login_user, logout_user, login_required, current_user
 
-cors = flask_cors.CORS()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'top secret'
+app.config['CORS_HEADERS'] = 'Content-Type' 
 
+cors = CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 login_manager = LoginManager(app)
 login_manager.login_view = 'api_login'
-cors = flask_cors.CORS()
-
-cors.init_app(app)
 login_manager.init_app(app)
+
 grid_fs = gridfs.GridFS(Database.db)
 
 
@@ -33,7 +32,7 @@ def register():
         password = req.get('password', None)
         roll = req.get('roll', None)
         batch = req.get('batch', None)
-
+        print(req)
         # Check for existing user
         find_user = User.get_by_email(email)
         if find_user is not None:
@@ -43,6 +42,7 @@ def register():
         pwd_hash = generate_password_hash(password, method="pbkdf2:sha256", salt_length=16)
         
         file = request.files['image']
+        print(file)
         id = grid_fs.put(file, content_type = file.content_type, filename = email)
         
         new_user = User(name, email, pwd_hash, roll, _id = id, batch = batch)
@@ -51,13 +51,16 @@ def register():
         if new_user:
             new_user.document['photo_url'] = 'localhost:5000/getimage/{}'.format(str(id))
             new_user.save_to_mongo(new_user.document)
-            login_user(new_user)
+            login_user(new_user,remember=True)
             return jsonify(status="User registered successfully", id = str(new_user._id)), 200
         
 
 # Login, Return request['next'] if it exists
 @app.route('/api/login', methods=['POST', 'GET'])
 def api_login():
+    if current_user.is_authenticated:
+        print(current_user.email)
+        return jsonify(status = "Already logged in")
     if request.method == 'POST':
         req = request.form.to_dict()
         email = req.get('email', None)
@@ -76,11 +79,7 @@ def api_login():
         if pwd_check == False:
             flash('Incorrect Password')
             return jsonify(status="Password Incorrect"), 400
-        login_user(user)
-        if user.is_authenticated:
-            print("already logged in")
-        else:
-            print("new login")
+        login_user(user,remember=True)
         return jsonify(status="Logged in successfully"), 200
             
 
@@ -115,9 +114,13 @@ def get_batch21(batch):
 
     return jsonify(students=l), 200
 
-@app.route('/test') 
-def test():
-    return jsonify(response = "api call successful"), 200
+@app.route('/api/checklogin')
+def check_login():
+    # Add Auth logic
+    if current_user.is_authenticated:
+        return jsonify({'Status': True})
+    else:
+        return jsonify({'Status': False})
 
 @login_manager.unauthorized_handler
 def unauth():
