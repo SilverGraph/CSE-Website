@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Resources.css";
 import psoc from "./logos/psoc.png";
 import paracosm from "./logos/paracosm.png";
@@ -75,7 +75,7 @@ export default function SocCard() {
         <div className="societies">
         <Container>
             {cardsArray.map((element) => (
-            <div className="rows">
+            <div className="rows" key={element.title1}>
                 <Card1
                 title={element.title1}
                 content={element.content1}
