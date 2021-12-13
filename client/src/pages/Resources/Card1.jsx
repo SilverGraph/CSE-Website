@@ -15,7 +15,7 @@ export default function Card1({title,content,image}) {
     const [lines, setlines] = useState(60);
     const [button, setButton] = useState(<p><i className="arrow down"></i></p>);
     const readMore = function(){
-        if(lines==60){
+        if(lines===60){
             setlines('auto');
             setButton(<p><i className="arrow up"></i></p>)
         }else{
