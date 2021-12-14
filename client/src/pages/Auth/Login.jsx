@@ -33,7 +33,7 @@ export default function Login() {
     async function checkAuth() {
       await axios({
           method: 'get',
-          url: 'http://127.0.0.1:5000/api/checklogin',
+          url: 'https://cse-2k25.herokuapp.com/api/checklogin',
           // data: formData,
           // headers:{"Content-Type": "LOL"}, 
           withCredentials: true
@@ -57,7 +57,7 @@ export default function Login() {
   async function handleSubmit() {
     await axios({
       method: 'post',
-      url: 'http://127.0.0.1:5000/api/login',
+      url: 'https://cse-2k25.herokuapp.com/api/login',
       data: formData,
       headers:{"Content-Type": "multipart/form-data"}, 
       withCredentials: true
@@ -72,7 +72,7 @@ export default function Login() {
 
     await axios({
       method: 'get',
-      url: 'http://127.0.0.1:5000/api/checklogin',
+      url: 'https://cse-2k25.herokuapp.com/api/checklogin',
       // data: formData,
       // headers:{"Content-Type": "LOL"}, 
       withCredentials: true
@@ -88,7 +88,7 @@ export default function Login() {
   async function handleLogout(){
     await axios({
       method: 'get',
-      url: 'http://127.0.0.1:5000/api/logout',
+      url: 'https://cse-2k25.herokuapp.com/api/logout',
       // data: formData,
       // headers:{"Content-Type": "multipart/form-data"}, 
       withCredentials: true
@@ -99,7 +99,7 @@ export default function Login() {
     });
     await axios({
       method: 'get',
-      url: 'http://127.0.0.1:5000/api/checklogin',
+      url: 'https://cse-2k25.herokuapp.com/api/checklogin',
       // data: formData,
       // headers:{"Content-Type": "multipart/form-data"}, 
       withCredentials: true

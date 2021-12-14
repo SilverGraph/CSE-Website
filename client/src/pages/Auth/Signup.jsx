@@ -43,7 +43,7 @@ export default function Login() {
     async function checkAuth() {
       await axios({
           method: 'get',
-          url: 'http://127.0.0.1:5000/api/checklogin',
+          url: 'https://cse-2k25.herokuapp.com/api/checklogin',
           // data: formData,
           // headers:{"Content-Type": "LOL"}, 
           withCredentials: true
@@ -77,7 +77,7 @@ export default function Login() {
     else {
       await axios({
         method: "post",
-        url: "http://127.0.0.1:5000/api/register",
+        url: "https://cse-2k25.herokuapp.com/api/register",
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
@@ -94,7 +94,7 @@ export default function Login() {
         })
       // axios calls and other checks
 
-      await axios.get("http://127.0.0.1:5000/api/checklogin").then((props) => {
+      await axios.get("https://cse-2k25.herokuapp.com/api/checklogin").then((props) => {
         console.log(props)
         history.push("/")
       })
