@@ -17,7 +17,7 @@ function Navbar(props) {
       withCredentials: true
     }).then((props) => {
       console.log(props)
-      window.location="/"
+      window.location = "/"
     }).catch(function (response) {
       console.log(response);
     });

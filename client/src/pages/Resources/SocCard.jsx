@@ -10,9 +10,8 @@ import photogeeks from "./logos/photogeeks.png";
 import sports from "./logos/sports.png";
 import TARS from "./logos/TARS.png";
 import vedanta from "./logos/vedanta.png";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import Card1 from "./Card1";
-import Card2 from "./Card2";
 import BgStars from "../../components/background/BgStars";
 import Navbar from "../../components/Navbar";
 export default function SocCard() {
@@ -87,7 +86,7 @@ export default function SocCard() {
         <Container>
           <>
             {cardsArray.map((element) => (
-            <Row className="rows">
+            <Row key={element.title1} className="rows">
                 <Card1
                 title={element.title1}
                 content={element.content1}
