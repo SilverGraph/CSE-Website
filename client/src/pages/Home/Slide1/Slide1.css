@@ -19,13 +19,13 @@ figure {
   overflow: hidden;
 }
 
-svg {
+#slide-1-svg {
   padding: 5vw;
   width: 90vw;
   overflow-x: hidden;
 }
 
-svg > * {
+#slide-1-svg > * {
   fill: #ffff;
   stroke: #ffff;
   stroke-width: 0.85px;

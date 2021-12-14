@@ -1,5 +1,5 @@
 import React  from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Button } from '@mui/material';
 import './Navbar.css';
 import axios from "axios"
@@ -17,7 +17,7 @@ function Navbar(props) {
       withCredentials: true
     }).then((props) => {
       console.log(props)
-      window.reload()
+      window.location="/"
     }).catch(function (response) {
       console.log(response);
     });
@@ -53,7 +53,7 @@ function Navbar(props) {
       
       {props.isAuth ? 
         <Button onClick={handleLogout}>Logout</Button> :
-        <Button onClick={() => window.location="/login"}>Login</Button>
+        <Link to="/login" style={{textDecoration:"none"}}><Button>Login</Button></Link>
       }
       
     </div>

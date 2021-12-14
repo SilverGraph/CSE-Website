@@ -182,18 +182,6 @@ export default function Login() {
               >
                 Login
               </Button>
-              <Button onClick={handleLogout}
-                size="large"
-                variant="outlined"
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                // startIcon={<GoogleIcon />}
-              >
-                Logout
-              </Button>
             </CardActions>
             <div sx={{ padding: "0px" }}>
               <Link to="/signup">

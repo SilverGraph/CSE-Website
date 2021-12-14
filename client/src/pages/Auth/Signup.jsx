@@ -14,7 +14,7 @@ import axios from "axios"
 // import CloseIcon from "@mui/icons-material/Close";
 // import GoogleIcon from "@mui/icons-material/Google";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles"
-import { Link } from "react-router-dom"
+import { Link,useHistory } from "react-router-dom"
 import BgStars from "../../components/background/BgStars"
 import Navbar from "../../components/Navbar";
 import "./Signup.css"
@@ -37,6 +37,7 @@ export default function Login() {
   const [about, setAbout] = useState("")
   const [file, setFile] = useState(null)
   const [social, setSocial] = useState({ Instagram: "", Github: "", Linkedin: "" })
+  const history = useHistory()
 
   useEffect(() => {
     async function checkAuth() {
@@ -95,12 +96,13 @@ export default function Login() {
 
       await axios.get("http://127.0.0.1:5000/api/checklogin").then((props) => {
         console.log(props)
+        history.push("/")
       })
     }
   }
 
   return (
-    auth ? window.location="/error" :
+    auth ? window.location="/" :
     <>
     <Navbar/>
      <BgStars />
