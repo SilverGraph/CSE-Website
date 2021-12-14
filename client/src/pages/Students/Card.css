@@ -66,15 +66,17 @@ svg.curve {
 
 .info {
 	font-family: Roboto;
-    transform: translateY(250px);
+    transform: translateY(350px);
     background-color: aliceblue;
     width:260px;
-    min-height:125px;
+    /* height:  */
+    /* min-height:125px;
+    max-width: 250px; */
     transition: transform 1s cubic-bezier(.31,1.21,.64,1.02);
 }
 
 .cards:hover .info {
-    transform: translateY(-50px);
+    transform: translateY(-150px);
 }
 
 .name {
