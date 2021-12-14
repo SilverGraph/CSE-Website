@@ -11,7 +11,7 @@ function Navbar(props) {
   async function handleLogout(){
     await axios({
       method: 'get',
-      url: 'http://127.0.0.1:5000/api/logout',
+      url: 'https://cse-2k25.herokuapp.com/api/logout',
       // data: formData,
       // headers:{"Content-Type": "multipart/form-data"}, 
       withCredentials: true
