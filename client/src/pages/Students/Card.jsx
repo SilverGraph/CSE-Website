@@ -11,13 +11,13 @@ export default function Card({user , index}) {
               <div className="connections mb-2">
               <IconContext.Provider value={{color: 'black', size: 30}}>
                          {user.social_media.Instagram && 
-                          <div className="connection insta" href={user.social_media.Instagram}>
+                          <a rel="noreferrer" target="_blank" className="connection insta" href={user.social_media.Instagram}>
                             <i style={{fontSize: '30px', color: 'black'}} className="fab fa-instagram"></i>
-                          </div>}
+                          </a>}
                           {user.social_media.Linkedin && 
-                          <div className="connection linkedin"href={user.social_media.Linkedin}>
+                          <a rel="noreferrer" target="_blank" className="connection linkedin"href={user.social_media.Linkedin}>
                           <i style={{fontSize: '30px', color: 'black'}} className="fab fa-linkedin-in"></i>
-                          </div>}
+                          </a>}
                           {user.social_media.Github && 
                         //   <Link to={user.social_media.Github}>
                           <a rel="noreferrer" target="_blank" className="connection github" href={user.social_media.Github}>

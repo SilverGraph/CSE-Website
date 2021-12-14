@@ -1,7 +1,8 @@
 .container-slide-1 {
   align-items: center;
   background-color: transparent;
-  border: 1px solid #fff;
+  overflow: hidden;
+  /* border: 1px solid #fff; */
   color: #fff;
   display: flex;
   height: 100vh;
@@ -17,23 +18,24 @@ figure {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+  margin-right: 100px
 }
 
-svg {
+#slide-1-svg {
   padding: 5vw;
-  width: 90vw;
+  width: 100vw;
   overflow-x: hidden;
 }
 
-svg > * {
+#slide-1-svg > * {
   fill: #ffff;
   stroke: #ffff;
   stroke-width: 0.85px;
 }
 
 /* hover tip */
-body:hover:after {
-  content: "Hover to Slow Motion";
+figure:hover:after {
+  /* content: "Hover to Slow Motion"; */
   position: absolute;
   left: 0;
   right: 0;

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import "./Slide1.scss"
+import "./Slide1.css"
 import { TimelineMax, CSSPlugin, Power4} from "gsap";
 import $ from "jquery"
 
@@ -57,7 +57,7 @@ export default function Slide1() {
     return (
         <div data-aos="fade-up" className="container-slide-1">
             <figure>
-            <svg version="1.1" x="0px" y="0px"
+            <svg id="slide-1-svg" version="1.1" x="0px" y="0px"
                 viewBox="0 0 1920 1080" 
                 // style="enable-background:new 0 0 1920 1080;"
                 >

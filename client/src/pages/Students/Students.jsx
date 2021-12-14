@@ -74,7 +74,7 @@ export default function Students() {
   function seniors() {
     return (
       <>
-        <div className="container">
+        <div className="container" style={{marginTop: "0"}}>
           <h2 className="heading m-4"> 2020 STUDENTS</h2>
           <div className="row g-xs-1 gy-3 gx-5 mx-xs-2 Row">{displaySeniors}</div>
         </div>
@@ -85,7 +85,7 @@ export default function Students() {
   function juniors() {
     return (
       <>
-        <div className="container">
+        <div className="container" style={{marginTop: "0"}}>
           <h2 className="heading m-4">2021 STUDENTS</h2>
           <div className="row g-xs-1 gy-3 gx-3 mx-xs-2 Row">{displayJuniors}</div>
         </div>
