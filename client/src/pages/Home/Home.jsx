@@ -23,7 +23,7 @@ export default function Home() {
         async function checkAuth() {
             await axios({
                 method: 'get',
-                url: 'http://127.0.0.1:5000/api/checklogin',
+                url: 'https://cse-2k25.herokuapp.com/api/checklogin',
                 // data: formData,
                 // headers:{"Content-Type": "LOL"}, 
                 withCredentials: true

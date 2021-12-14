@@ -23,7 +23,7 @@ export default function Students() {
     async function checkAuth() {
       await axios({
           method: 'get',
-          url: 'http://127.0.0.1:5000/api/checklogin',
+          url: 'https://cse-2k25.herokuapp.com/api/checklogin',
           withCredentials: true
       }).then((props) => {
           // console.log(props.data.Status)
@@ -38,7 +38,7 @@ export default function Students() {
       // FETCH DATA FOR BATCH-2020
       await axios({
         method: 'get',
-        url: 'http://127.0.0.1:5000/students/2020',
+        url: 'https://cse-2k25.herokuapp.com/students/2020',
         withCredentials: true
       }).then(async res => {
           // console.log(res.data.students)
@@ -50,7 +50,7 @@ export default function Students() {
       // FETCH DATA FOR BATCH-2020
       await axios({
         method: 'get',
-        url: 'http://127.0.0.1:5000/students/2021',
+        url: 'https://cse-2k25.herokuapp.com/students/2021',
         withCredentials: true
       }).then(async res => {
           // console.log(res.data.students)
