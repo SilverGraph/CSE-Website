@@ -11,12 +11,9 @@ import {
   TextField,
 } from "@mui/material"
 import axios from "axios"
-// import CloseIcon from "@mui/icons-material/Close";
-// import GoogleIcon from "@mui/icons-material/Google";
 import { createTheme, ThemeProvider} from "@mui/material/styles"
 import { Link,useHistory } from "react-router-dom"
 import BgStars from "../../components/background/BgStars"
-import Navbar from "../../components/Navbar";
 import "./Signup.css"
 
 const darkTheme = createTheme({
@@ -24,10 +21,6 @@ const darkTheme = createTheme({
     mode: "dark",
   },
 })
-
-// const Input = styled('input')({
-//   // display: 'none',
-// });
 
 export default function Login() {
   const [auth, setAuth] = useState(false)
@@ -104,7 +97,6 @@ export default function Login() {
   return (
     auth ? window.location="/" :
     <>
-    <Navbar/>
      <BgStars />
      <ThemeProvider theme={darkTheme}>
        <div

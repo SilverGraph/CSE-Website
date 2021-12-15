@@ -213,13 +213,16 @@ body {
 		margin-bottom: 0px;
 	}
 }
-/*
 .societies{
-    padding: 26px 0px;
-    box-sizing: border-box;
-    clear: both;
-    
+	padding-top: 70px;
 }
+
+@media(max-width: 1000px){
+	.societies{
+		padding-top: 0px !important;
+	}
+}
+/*
 .societies .container{
     display: flex;
     flex-direction: column;

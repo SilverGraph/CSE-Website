@@ -34,7 +34,7 @@ li{
     margin-right: 15px;
 }
 .active{
- text-decoration: underline;
+    text-decoration: none;
 }
 
 @media screen and (max-width: 993px) {
@@ -48,4 +48,8 @@ li{
     .Buttons a{
         margin-top: 15px;
     }
+}
+
+.MuiButton-textInherit{
+    color: white !important;
 }

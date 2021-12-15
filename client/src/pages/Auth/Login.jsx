@@ -15,7 +15,6 @@ import axios from "axios"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { Link, useHistory } from "react-router-dom"
 import BgStars from "../../components/background/BgStars"
-import Navbar from "../../components/Navbar";
 
 const darkTheme = createTheme({
   palette: {
@@ -85,35 +84,10 @@ export default function Login() {
       console.log(response);
     });
   }
-  async function handleLogout(){
-    await axios({
-      method: 'get',
-      url: 'https://cse-2k25.herokuapp.com/api/logout',
-      // data: formData,
-      // headers:{"Content-Type": "multipart/form-data"}, 
-      withCredentials: true
-    }).then((props) => {
-      console.log(props)
-    }).catch(function (response) {
-      console.log(response);
-    });
-    await axios({
-      method: 'get',
-      url: 'https://cse-2k25.herokuapp.com/api/checklogin',
-      // data: formData,
-      // headers:{"Content-Type": "multipart/form-data"}, 
-      withCredentials: true
-    }).then((props) => {
-      console.log(props)
-    }).catch(function (response) {
-      console.log(response);
-    });
-  }
 
   return (
     auth ? window.location = "/" :
     <>
-      <Navbar/>
       <BgStars />
       <ThemeProvider theme={darkTheme}>
         <div

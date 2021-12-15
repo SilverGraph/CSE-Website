@@ -10,9 +10,11 @@ import Signup from './pages/Auth/Signup';
 // import Resources from './pages/Resources/Resources'
 import SocCard from './pages/Resources/SocCard';
 import error from './components/error';
+import Navbar from './components/Navbar';
 
 ReactDOM.render(
   <BrowserRouter>
+    <Navbar />
     <Switch>
       <Route exact path="/" component={Home} />
       <Route exact path="/students" component={Students} />

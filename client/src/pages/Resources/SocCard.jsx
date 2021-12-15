@@ -13,8 +13,9 @@ import vedanta from "./logos/vedanta.png";
 import { Container, Row } from "react-bootstrap";
 import Card1 from "./Card1";
 import BgStars from "../../components/background/BgStars";
-import Navbar from "../../components/Navbar";
+
 export default function SocCard() {
+
   const cardsArray = [
     {
       image1: paracosm,
@@ -80,7 +81,6 @@ export default function SocCard() {
   ];
   return (
       <>
-      <Navbar/>
       <BgStars />
         <div className="societies">
         <Container>
