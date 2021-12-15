@@ -42,9 +42,6 @@
         margin-right: 5px;
     }
 }
-
-
-
-
-  
-  
+.MuiButton-outlinedInherit{
+    color: white;
+}

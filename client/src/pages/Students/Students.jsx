@@ -107,6 +107,7 @@ export default function Students() {
           <div style={{display: "flex",
                 justifyContent: "center",}}>
           <Button
+            color="inherit"
             onClick={() => {
               setSenior(true)
               getDetail(senos)
@@ -124,6 +125,7 @@ export default function Students() {
             2020
           </Button>
           <Button
+            color="inherit"
             onClick={() => {
               setSenior(false)
               // getDetail(junos)
