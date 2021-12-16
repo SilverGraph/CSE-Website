@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react"
 import { Button } from "@mui/material"
 import Card from "./Card"
 import "./Students.css"
-import { senos } from "./senior"
-import { junos } from "./junior"
+// import { senos } from "./senior"
+// import { junos } from "./junior"
 import BgStars from "../../components/background/BgStars"
 import axios from "axios"
 import { useHistory } from "react-router-dom"
@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom"
 export default function Students() {
   const [senior, setSenior] = useState(false)
   // eslint-disable-next-line
-  const [batch, getDetail] = useState(junos)
+  // const [batch, getDetail] = useState(junos)
   const [auth, setAuth] = useState(true)
   const [batch2020, setBatch2020] = useState([])
   const [batch2021, setBatch2021] = useState([])
@@ -110,7 +110,7 @@ export default function Students() {
             color="inherit"
             onClick={() => {
               setSenior(true)
-              getDetail(senos)
+              // getDetail(senos)
             }}
             size="large"
             variant="outlined"

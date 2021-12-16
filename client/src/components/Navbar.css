@@ -7,8 +7,8 @@
     color: rgb(255, 255, 255) !important;
 }
 .navlink-hover{
-    color: rgb(204, 204, 204) !important;
-    text-decoration: underline !important;
+    color: rgb(255,255,255) !important;
+    /* text-decoration: underline !important; */
 }
 .MuiButton-textInherit{
     color: white !important;

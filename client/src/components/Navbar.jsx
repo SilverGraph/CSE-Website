@@ -51,7 +51,7 @@ export default function NavBar() {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <NavLink to="/" className="active" activeClassName="navlink-hover">
+              <NavLink to="/" exact className="active" activeClassName="navlink-hover">
                 Home
               </NavLink>
               <NavLink to="/Students" className="active" activeClassName="navlink-hover">
