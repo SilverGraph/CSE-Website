@@ -83,7 +83,7 @@ export default function SocCard() {
       <>
       <BgStars />
         <div className="societies">
-        <Container>
+        <Container className="container1">
           <>
             {cardsArray.map((element) => (
             <Row key={element.title1} className="rows">

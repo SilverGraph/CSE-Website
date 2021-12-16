@@ -1,6 +1,6 @@
 html,
 body {
-	height: 100%;
+	/* height: 100%; */
 	width: 100vw;
 	margin: 0px;
 	padding: 0px;
@@ -8,7 +8,7 @@ body {
 	max-width: 100vw;
 }
 
-.container {
+.container1 {
 	max-width: 100%;
 	margin-top: 150px;
 }
@@ -107,7 +107,7 @@ body {
 }
 
 @media screen and (min-width: 570px) {
-	.container {
+	.container1 {
 		padding-left: 12%;
 	}
 	.rows {
@@ -116,7 +116,7 @@ body {
 }
 
 @media screen and (min-width: 670px) {
-	.container {
+	.container1 {
 		padding: 0px 30px 0px 30px;
 		margin-top: 170px;
 	}
@@ -130,7 +130,7 @@ body {
 }
 
 @media screen and (min-width: 710px) {
-	.container {
+	.container1 {
 		padding: 10px 45px 0px 45px;
 	}
 	.card h2 {
@@ -142,13 +142,13 @@ body {
 }
 
 @media screen and (min-width: 790px) {
-	.container {
+	.container1 {
 		margin-top: 200px;
 	}
 }
 
 @media screen and (min-width: 850px) {
-	.container {
+	.container1 {
 		width: 98%;
 		margin-top: 230px;
 		padding: 10px 10px 0px 20px;
@@ -167,7 +167,7 @@ body {
 }
 
 @media screen and (min-width: 1000px) {
-	.container {
+	.container1 {
 		padding: 10px 30px 0px 30px;
 		margin-top: 250px;
 	}
@@ -184,7 +184,7 @@ body {
 }
 
 @media screen and (min-width: 1200px) {
-	.container {
+	.container1 {
 		margin-top: 280px;
 	}
 	.card {
@@ -196,7 +196,7 @@ body {
 }
 
 @media screen and (min-width: 1250px) {
-	.container {
+	.container1 {
 		margin-top: 300px;
 		padding: 0px;
 	}
@@ -224,7 +224,7 @@ body {
 	}
 }
 /*
-.societies .container{
+.societies .container1{
     display: flex;
     flex-direction: column;
 }
