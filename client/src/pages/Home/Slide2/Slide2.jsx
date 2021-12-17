@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import React from "react"
 import "./Slide2.css"
 
 export default function Slide2() {

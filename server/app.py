@@ -68,7 +68,6 @@ def register():
         # Save user to database
         if new_user:
             new_user.document['photo_url'] = 'https://cse-2k25.herokuapp.com/getimage/{}'.format(str(id))
-
             new_user.save_to_mongo(new_user.document)
             login_user(new_user,remember=True)
             return jsonify(status="User registered successfully", id = str(new_user._id)), 200

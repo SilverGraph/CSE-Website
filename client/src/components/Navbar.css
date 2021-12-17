@@ -1,48 +1,18 @@
-li{
-    font-size: 18px;
-}
-
-.nav-Bar{
-    background-color: black !important;
-}
-.navbar-toggler:focus,
-.navbar-toggler:active,
-.navbar-toggler-icon:focus {
-    outline: none;
-    box-shadow: none;
-}
-.navbar-nav a{
-    color: white !important;
-    font-size: 22px;
-    margin-right: 15px;
-    font-weight: 500;
-}
-
-.navbar-nav a:hover{
-    text-decoration: underline;
-}
-
-.container-fluid{
-    width:80vw !important;
-    padding-top: 10px !important;
-}
-.Container{
-    display:flex;
-    justify-content: space-between;
-}
-.Buttons a{
-    margin-right: 15px;
-}
 .active{
- text-decoration: underline;
+    padding-left: 10px;
+    color: rgb(204, 204, 204) !important;
+    text-decoration: none !important;
 }
-
-@media screen and (max-width: 993px) {
-    .Container{
-        display:flex;
-        flex-direction: column;
-    }
-    .Buttons a{
-        margin-top: 15px;
-    }
+.active:hover{
+    color: rgb(255, 255, 255) !important;
+}
+.navlink-hover{
+    color: rgb(255,255,255) !important;
+    /* text-decoration: underline !important; */
+}
+.MuiButton-textInherit{
+    color: white !important;
+}
+.navbar{
+    background-color: rgba(0, 0, 0, 0) !important;
 }
