@@ -97,7 +97,7 @@ export default function Login() {
             alignItems: "center",
             height: "auto",
             minHeight: "90vh",
-            padding: "20vh 50px",
+            padding: "10vh 40px",
           }}
         >
           <Card
@@ -105,7 +105,7 @@ export default function Login() {
               minWidth: 270,
               maxWidth: 800,
               textAlign: "center",
-              padding: "20px 90px",
+              padding: "20px 7vh",
             }}
           >
             <CardContent>
@@ -115,7 +115,7 @@ export default function Login() {
               <Divider className="divider" sx={{ mb: 2 }} />
               <Typography variant="body2"  >Hey! Welcome Again...</Typography>
 
-              <FormControl variant="standard">
+              <FormControl variant="standard" margin="dense" fullWidth="true">
                 <TextField
                   id="id"
                   label="Institute ID"
