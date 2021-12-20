@@ -33,8 +33,9 @@ export default function Footer() {
             }}
           >
             Made with 🤍
-            <p style={{fontFamily: 'Montserrat', fontSize: '24px', wordSpacing: '15px', marginTop: '20px'}}>DEEPAK_YADAV KARISH_CHAUDHARY KHUSHI_SAHOO MUSKAN_SAHOO</p>
-            <p style={{fontFamily: 'Montserrat', fontSize: '24px', wordSpacing: '15px', marginTop: '20px'}}>PIYUSH_MISHRA PRANAV_PATEL RAJ_ARYAN SAURAV_PATI</p>
+            <p></p>
+            <p>DEEPAK YADAV • KARISH CHAUDHARY • KHUSHI SAHOO • MUSKAN SAHOO</p>
+            <p>PIYUSH MISHRA • PRANAV PATEL • RAJ ARYAN • SAURAV PATI</p>
           </Typography>
         </Container>
       </Box>
