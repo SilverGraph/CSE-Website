@@ -58,7 +58,7 @@ export default function NavBar() {
                 Students
               </NavLink>
               <NavLink to="/Resources" className="active" activeClassName="navlink-hover">
-                Resources
+              Societies
               </NavLink>
             </Nav>
             <Nav>
