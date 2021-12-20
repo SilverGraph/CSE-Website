@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
   Card,
   CardContent,
@@ -13,9 +13,8 @@ import axios from "axios"
 // import CloseIcon from "@mui/icons-material/Close";
 // import GoogleIcon from "@mui/icons-material/Google";
 import { createTheme, ThemeProvider } from "@mui/material/styles"
-import { Link} from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import BgStars from "../../components/background/BgStars"
-import Navbar from "../../components/Navbar";
 
 const darkTheme = createTheme({
   palette: {
@@ -26,6 +25,29 @@ const darkTheme = createTheme({
 export default function Login() {
   const [mail, setMail] = useState("");
   const [pass, setPass] = useState("");
+  const [auth, setAuth] = useState(false)
+  const history = useHistory()
+
+  useEffect(() => {
+    async function checkAuth() {
+      await axios({
+          method: 'get',
+          url: 'https://cse-2k25.herokuapp.com/api/checklogin',
+          // data: formData,
+          // headers:{"Content-Type": "LOL"}, 
+          withCredentials: true
+      }).then((props) => {
+          console.log(props.data.Status)
+          setAuth(props.data.Status)
+          // localStorage.setItem('userid', props.data.id)
+          // window.location= "/"
+      }).catch(function (response) {
+          //handle error
+          console.log(response);
+      });
+    }
+    checkAuth()
+  }, [auth])
 
   var formData = new FormData()
   formData.append('roll', mail);   //append the values with key, value pair
@@ -34,7 +56,7 @@ export default function Login() {
   async function handleSubmit() {
     await axios({
       method: 'post',
-      url: 'http://127.0.0.1:5000/api/login',
+      url: 'https://cse-2k25.herokuapp.com/api/login',
       data: formData,
       headers:{"Content-Type": "multipart/form-data"}, 
       withCredentials: true
@@ -46,58 +68,26 @@ export default function Login() {
       //handle error
       console.log(response);
     });
-      // axios calls and other checks
-    
-    // await axios.get("http://127.0.0.1:5000/api/checklogin")
-    //   .then((props) => {
-    //     console.log(props)
-    //     // if (props=== "True") {
-    //     //   window.location= "/"
-    //     // }
-    // })
+
     await axios({
       method: 'get',
-      url: 'http://127.0.0.1:5000/api/checklogin',
+      url: 'https://cse-2k25.herokuapp.com/api/checklogin',
       // data: formData,
       // headers:{"Content-Type": "LOL"}, 
       withCredentials: true
     }).then((props) => {
       console.log(props)
-      // localStorage.setItem('userid', props.data.id)
-      // window.location= "/"
+      setAuth(props.data.Status)
+      history.push("/")
     }).catch(function (response) {
       //handle error
       console.log(response);
     });
   }
-  async function handleLogout(){
-    await axios({
-      method: 'get',
-      url: 'http://127.0.0.1:5000/api/logout',
-      // data: formData,
-      // headers:{"Content-Type": "multipart/form-data"}, 
-      withCredentials: true
-    }).then((props) => {
-      console.log(props)
-    }).catch(function (response) {
-      console.log(response);
-    });
-    await axios({
-      method: 'get',
-      url: 'http://127.0.0.1:5000/api/checklogin',
-      // data: formData,
-      // headers:{"Content-Type": "multipart/form-data"}, 
-      withCredentials: true
-    }).then((props) => {
-      console.log(props)
-    }).catch(function (response) {
-      console.log(response);
-    });
-  }
 
   return (
+    auth ? window.location = "/" :
     <>
-      <Navbar/>
       <BgStars />
       <ThemeProvider theme={darkTheme}>
         <div
@@ -165,18 +155,6 @@ export default function Login() {
                 // startIcon={<GoogleIcon />}
               >
                 Login
-              </Button>
-              <Button onClick={handleLogout}
-                size="large"
-                variant="outlined"
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                // startIcon={<GoogleIcon />}
-              >
-                Logout
               </Button>
             </CardActions>
             <div sx={{ padding: "0px" }}>

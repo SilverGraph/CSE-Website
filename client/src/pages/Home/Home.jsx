@@ -6,7 +6,6 @@ import Slide1 from "./Slide1/Slide1"
 import Slide2 from "./Slide2/Slide2"
 import Slide3 from "./Slide3/Slide3"
 import BgStars from '../../components/background/BgStars';
-import Navbar from "../../components/Navbar";
 
 export default function Home() {
     useEffect(() => {
@@ -15,12 +14,11 @@ export default function Home() {
             easing: 'ease-in-out',
             duration: 1500
         })
-        AOS.refresh()
+        AOS.refresh()        
     }, [])
 
     return (
         <div id="container-slides">
-            <Navbar/>
             <BgStars />
             <Slide1 />
             <Slide2 />

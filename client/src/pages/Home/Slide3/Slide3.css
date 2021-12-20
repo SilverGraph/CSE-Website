@@ -16,12 +16,12 @@
     z-index: -1;
 }
 
-svg {
+#slide-3-svg {
 	font-family: 'Noto', sans-serif;
     position: absolute; 
     width: 100%; height: 100%;
 }
-svg text {
+#slide-3-svg text {
     text-transform: uppercase;
     animation: stroke 5s infinite alternate;
     stroke-width: 2;

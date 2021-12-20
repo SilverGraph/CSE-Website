@@ -10,12 +10,12 @@ import photogeeks from "./logos/photogeeks.png";
 import sports from "./logos/sports.png";
 import TARS from "./logos/TARS.png";
 import vedanta from "./logos/vedanta.png";
-import { Container } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import Card1 from "./Card1";
-import Card2 from "./Card2";
 import BgStars from "../../components/background/BgStars";
-import Navbar from "../../components/Navbar";
+
 export default function SocCard() {
+
   const cardsArray = [
     {
       image1: paracosm,
@@ -70,24 +70,25 @@ export default function SocCard() {
   ];
   return (
       <>
-      <Navbar/>
       <BgStars />
         <div className="societies">
-        <Container>
+        <Container className="container1">
+          <>
             {cardsArray.map((element) => (
-            <div className="rows" key={element.title1}>
+            <Row key={element.title1} className="rows">
                 <Card1
                 title={element.title1}
                 content={element.content1}
                 image={element.image1}
                 />
-                <Card2
+                {/* <Card2
                 title={element.title2}
                 content={element.content2}
                 image={element.image2}
-                />
-            </div>
+                /> */}
+            </Row>
             ))}
+          </>
         </Container>
         </div>
     </>

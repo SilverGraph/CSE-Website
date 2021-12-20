@@ -1,8 +1,9 @@
-/* html, body {
-    background: #000;
-}
-
-#container-slides {
-    background: #000;
+ /* html, body {
+    overflow-x: hidden;
     scroll-behavior: smooth;
 } */
+
+/* #container-slides {
+    background: #000;
+    scroll-behavior: smooth;
+}  */
