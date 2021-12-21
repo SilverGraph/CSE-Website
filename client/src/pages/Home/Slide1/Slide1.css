@@ -50,10 +50,16 @@ figure:hover:after {
 
 #quote{
   font-size: 1.75rem;
-  position: absolute;
+  position:fixed;
   text-align: center;
-  top: 450px;
+  top: 500px;
   width: 80vw;
+  margin-right: 100px; 
 }
 
+@media(max-width: 400px){
+  #quote{
+    font-size: 1rem;
+  }
+}
 /*# sourceMappingURL=Slide1.css.map */
