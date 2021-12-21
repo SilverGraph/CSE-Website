@@ -54,6 +54,13 @@ figure:hover:after {
   text-align: center;
   top: 450px;
   width: 80vw;
+  margin-right: 100px;
 }
 
 /*# sourceMappingURL=Slide1.css.map */
+
+@media screen and (max-width: 400px){
+  #quote{
+    font-size: 1rem;
+  }
+}
