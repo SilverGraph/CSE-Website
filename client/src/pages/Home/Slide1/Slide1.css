@@ -60,7 +60,7 @@ figure:hover:after {
   padding-left: 1vw;
 }
 
-@media(max-width: 400px){
+@media(max-width: 600px){
   #quote{
     font-size: 1rem;
   }
