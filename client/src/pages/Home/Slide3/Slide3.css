@@ -41,3 +41,11 @@
       background-position-x: 500%;
     }
   }
+  
+  @media screen and (max-width: 400px){
+    #events{
+      font-size: 2.25rem;
+    }
+  }
+
+  

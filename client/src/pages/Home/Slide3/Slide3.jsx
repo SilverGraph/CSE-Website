@@ -15,7 +15,7 @@ export default function Slide3() {
             </video>
             
           
-           <p id="events">Explore • Endeavour • Enjoy</p>
+           <p id="events">• Explore • Endeavour • Enjoy •</p>
         </div>
     )
 }
