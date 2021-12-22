@@ -125,6 +125,7 @@ def get_batch21(batch):
         l[roll_id] = {}
         l[roll_id]['name'] = item['name']
         l[roll_id]['email'] = item['email']
+        l[roll_id]['roll'] = item['email'][0:7]
         l[roll_id]['date'] = item['date_created']
         l[roll_id]['photo_url'] = item['photo_url']
         l[roll_id]['description'] = item['description']
