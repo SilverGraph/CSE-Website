@@ -38,6 +38,7 @@ export default function Card({user , index}) {
              </svg>
              <div className="info p-1">
              <div className="name">{user.name}</div>
+             <div style={{color:"rgba(0,0,0,0.8)"}}>{user.roll}</div>
              <div className="bio">{user.description}</div>
              </div>
           </div>

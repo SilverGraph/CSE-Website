@@ -217,8 +217,11 @@ export default function Login() {
                  <Typography variant="body2" color="text.secondary">
                    Click to upload image
                  </Typography>
-               </Button>
-             </label>
+                    </Button>
+                  </label>
+                  <Typography variant="caption" color="text.secondary" gutterBottom>
+                  * Please upload file less than 3 mb
+                  </Typography>
              </FormControl>
              
            </CardContent>

@@ -322,6 +322,8 @@ export default function Slide1() {
         </g>
         </svg>
         </figure>
+        <p id="quote">"Love all, trust a few, do wrong to none" <br />
+            Welcome to your college life, to peppy roads of tech adventures. A detour to discovery of life and pursuit of the passions....</p>
         </div>
     )
 }

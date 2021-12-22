@@ -33,6 +33,9 @@ export default function Footer() {
             }}
           >
             Made with 🤍
+            <p></p>
+            <p>ADITI ROUT • DEEPAK YADAV • KARISH CHAUDHARY • KHUSHI SAHOO • MUSKAN SAHOO</p>
+            <p>PIYUSH MISHRA • PRANAV PATEL • RAJ ARYAN • SAURAV PATI • SUBHRAJYOTI</p>
           </Typography>
         </Container>
       </Box>
