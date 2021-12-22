@@ -12,9 +12,9 @@ export default function Slide2() {
     const texts = [
       "CSE",
       "DEVELOPERS",
-      "CODERS",
       "PROGRAMMERS",
       "DESIGNERS",
+      "ENTREPRENEURS",
       "IIITIANS",
     ];
     
