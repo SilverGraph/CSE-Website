@@ -28,7 +28,7 @@ export default function SocCard() {
       image1: Ecell,
       title1: "E-Cell",
       content1:
-        "Break the walls and Scale it up. The most active cell of IIIT-Bhubaneswar, E-Cell is a student's organization that works in the area of entrepreneurship & management and provides a platform to students interested in entrepreneurship who want to achieve success in this field. The cell organizes several activities for student development wherein students get opportunities to explore themselves.",
+        "Break the walls and Scale it up. The most active cell of IIIT-Bhubaneswar, E-Cell is a student's organization that works in the area of entrepreneurship & management and provides a platform to students interested in entrepreneurship who want to achieve success in this field.",
     },
     {
       image1: TARS,
@@ -64,7 +64,7 @@ export default function SocCard() {
       image1: photogeeks,
       title1: "Photogeeks",
       content1:
-        "The face of institution, it is none other than PhotoGeeks, the Official Photography Society of IIIT-Bhubaneswar. In the veins of these people flows the skill of capturing the world through the camera wiping out the fear of missing out memories. The best 4 years of Engineering life can't be more memorable without these people capturing unforgettable moments",
+        "The face of institution, it is none other than PhotoGeeks, the Official Photography Society of IIIT-Bhubaneswar. In the veins of these people flows the skill of capturing the world through the camera wiping out the fear of missing out memories. The best 4 years of Engineering life can't be more memorable without these people capturing unforgettable moments.",
     },
     {
       image1: sports,
