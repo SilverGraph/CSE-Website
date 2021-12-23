@@ -41,7 +41,8 @@ def register():
         email = roll + '@iiit-bh.ac.in'
         batch = '20' + roll[2:4]
         valid_roll = True
-
+        
+        branch_change=["b320003","b420019","b320020","b320046","b320054","b220055" ]
         # Check for valid roll number
         if((batch != '2020') and (batch != '2021')):
             valid_roll = False
@@ -49,6 +50,8 @@ def register():
             valid_roll = False
         elif(roll[0:2] != 'b1'):
             valid_roll = False
+        if(roll in branch_change):
+            valid_roll = True
 
         if(not valid_roll):
             return jsonify(status='Invalid roll number'), 400
